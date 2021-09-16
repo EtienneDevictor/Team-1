@@ -12,7 +12,7 @@
 *
 *
 
-**Login/Sign-up
+**Login/Sign-up**
 
 ## Summary
 
@@ -111,7 +111,7 @@ the user stays on the files directory because the phrase was not found
 
 
 
-** Converting markdown files to downloadable pdf 
+**Converting markdown files to downloadable pdf** 
 
 ## Summary
 
@@ -145,7 +145,7 @@ the user had downloaded the file as a pdf onto their device
 
 
 
-** Transferring notes between users 
+**Transferring notes between users**
 
 ## Summary
 A user get a markdown file from the system transfers the file to another user who inputs it and gets a set of notes added to their account
@@ -193,7 +193,7 @@ Step 9 fails
 
 
 
-** Transferring Flashcards Between Users
+**Transferring Flashcards Between Users**
 
 ## Summary
 a user gets markdown file from the system, transfers it to another user and the second user inputs it into system and the flashcards are added to there account
