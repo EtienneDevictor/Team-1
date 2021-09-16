@@ -455,3 +455,86 @@ The user clicks on the “Quiz” button. The user is brought to the quiz page a
 ### Alternate Postconditions
 * if user exits the quiz, the user does not need to complete the quiz
 
+**Use Case Name: Sort notes by Class or Category**
+## Summary
+The user can separate notes by class or category. This will make it easier for the user to sort through their notes and will function to save time for the user. 
+## Actors
+1. The user
+## Preconditions
+* The user has an account
+* The user can have notes already created
+## Triggers
+*User clicks on one of the notes and can drag it to a class or category
+*User can create a note and select to create it in a class or category 
+ 
+## Primary Sequence
+1. The user creates a new class or category inside the notes pages
+2. The user can drag their notes into the newly created class or categories
+3. The user can sort the class or categories into any order
+
+## Primary Postconditions
+* The user has a new class or category
+* The user has notes inside the class or category 
+## Alternate Sequences
+* Step 2 alt. Seq.
+1. The user can create new notes
+2. The user selects the class or category to add the notes into
+* Step 1 alt. Seq.
+1. The user can remove class or category inside the notes pages
+### Alternate Trigger
+1. The user is editing the notes
+1. The user can change the class or category of the notes
+### Alternate Postconditions
+1. The user has no classes or categories
+ 
+Use Case Name: Render markdown notes
+## Summary
+The user enters text in the markdown format, and the syntax should render the notes changing the appearance of the text as it is entered. 
+## Actors
+1. User 1 
+## Preconditions
+* The user enters text in the markdown syntax
+## Triggers
+The user enters text in the markdown syntax, and the app should correctly render the typed input to the proper output
+## Primary Sequence
+1. User 1 opens the notes
+2. User 1 enters the text into his notes
+3. User 1 saves the notes
+4. The notes are correctly rendered in the markdown file
+## Primary Postconditions
+* Notes are correctly rendered in the markdown format
+ 
+**Use Case Name: Create groups and add group chat**
+## Summary
+The user can create groups of people to share/edit notes and chat online via a text channel
+ 
+## Actors
+1. User 1
+2. User 2
+3. User 3
+## Preconditions
+* All users have an account and are signed in
+* One user must have a note page open to share or edit
+## Triggers
+User 1 decides to share notes with users for them to view/edit. A group is created and the users can edit the notes and a text channel is created so that the members of the group can chat amongst each other. 
+ 
+## Primary Sequence
+1. User 1 goes to the main page
+2. User 1 clicks the “create group” button
+3. User 1 can send a group invitation to User 2 and User 3
+4. User 2 and User 3 join the group
+5. User 1, 2, and 3 can create a new note
+6. User 1, 2, and 3 can edit the note
+7. User 1, 2, and 3 can chat in the text channel to update each other
+ 
+## Primary Postconditions
+* Users 1, 2, and 3 are in a group together
+* Users 1, 2, and 3 are in a chat together
+* Users 1, 2, and 3 can edit notes in their group
+ 
+## Alternate Sequences
+* Step 5 alt. Seq.
+1. User 1, 2, or 3 can share a note that they have already created
+### Alternate Trigger
+Any of the users can prompt the group creation
+
