@@ -416,4 +416,42 @@ The flash cards that user 1 transferred can now be viewed and edited on user two
 Step 9 fails to be verified
 1. user 2 is sent back to step 6
 
+**Use Case Name: Quiz Feature**
+## Summary
+The user will be able to access a quiz feature for a subject or course. Upon being accessed, questions are prompted based on the subject or course they chose to promote learning.  
+## Actors
+The user 
+## Preconditions
+* user is logged into account
+* the user has flashcards 
+*notes are sorted by class or categories
+ 
+## Triggers
+The user clicks on the “Quiz” button. The user is brought to the quiz page and the quiz begins.  
+## Primary Sequence
+User clicks on the quiz button
+User inputs an answer to the first question
+User is ready to move onto the next question
+User can press the “next” button to move onto the next question
+User continues step 3 and 4 until there are no more questions 
+User presses the “submit” button
+The quiz is submitted and is automatically graded
+Program displays a grade and an option for the user to review their answers
+The user can go forward through the questions by pressing the “next” button
+The user’s answers are displayed and the correct answers are displayed, if they got the question wrong
+## Primary Postconditions
+* user completes the quiz
+ 
+## Alternate Sequences
+* Step 5 alt. seq.
+User wants to go back to a previous question
+User can press the “previous” button to move back to the previous question
+*Step 9 alt. Seq.
+User can go backward through the questions by pressing the “previous” button
+*Step 2 alt. Seq.
+User can exit the quiz at anytime
+### Alternate Trigger
+
+### Alternate Postconditions
+*if user exits the quiz, the user does not need to complete the quiz
 
