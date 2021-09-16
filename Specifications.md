@@ -1,12 +1,13 @@
-# Use Case Description
-** Date: 9/15/2021
-** Product Name: 
+
 ## Team-1 Study-Better 
 [Github Project Link](https://github.com/EtienneDevictor/Team-1)
 # Use Case Desciption
 **Date: 9/15/2021**
+
 **Product Name: Study-Better**
+
 **Problem Statement: Creating an app to help user study using customizable flashcards and notes**
+
 **Non-functional Requirements**
 * System should respond to the user withing one second 
 * All text communicated to the user shall be in english 
@@ -67,7 +68,7 @@ user creates an account and is logged into account
 
 
 
-** Searching files for file containing specific text
+**Searching files for file containing specific text**
 
 ## Summary
 
