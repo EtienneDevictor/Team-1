@@ -4,13 +4,14 @@
 ## Team-1 Study-Better 
 [Github Project Link](https://github.com/EtienneDevictor/Team-1)
 # Use Case Desciption
-** Date: 9/15/2021
-** Product Name: Study-Better
-** Problem Statement:
-**Non-functional Requirements
-*
-*
-*
+**Date: 9/15/2021**
+**Product Name: Study-Better**
+**Problem Statement: Creating an app to help user study using customizable flashcards and notes**
+**Non-functional Requirements**
+* System should respond to the user withing one second 
+* All text communicated to the user shall be in english 
+* This application should only access .md and .png files
+
 
 **Login/Sign-up**
 
