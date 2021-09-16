@@ -447,11 +447,11 @@ The user clicks on the “Quiz” button. The user is brought to the quiz page a
 1. User wants to go back to a previous question
 2. User can press the “previous” button to move back to the previous question
 
-*Step 9 alt. Seq.
+* Step 9 alt. seq.
 1. User can go backward through the questions by pressing the “previous” button
 
-*Step 2 alt. Seq.
+* Step 2 alt. seq.
 1. User can exit the quiz at anytime
 ### Alternate Postconditions
-*if user exits the quiz, the user does not need to complete the quiz
+* if user exits the quiz, the user does not need to complete the quiz
 
