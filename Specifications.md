@@ -487,7 +487,7 @@ The user can separate notes by class or category. This will make it easier for t
 ### Alternate Postconditions
 1. The user has no classes or categories
  
-Use Case Name: Render markdown notes
+**Use Case Name: Render markdown notes**
 ## Summary
 The user enters text in the markdown format, and the syntax should render the notes changing the appearance of the text as it is entered. 
 ## Actors
