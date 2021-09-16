@@ -429,29 +429,27 @@ The user
 ## Triggers
 The user clicks on the “Quiz” button. The user is brought to the quiz page and the quiz begins.  
 ## Primary Sequence
-User clicks on the quiz button
-User inputs an answer to the first question
-User is ready to move onto the next question
-User can press the “next” button to move onto the next question
-User continues step 3 and 4 until there are no more questions 
-User presses the “submit” button
-The quiz is submitted and is automatically graded
-Program displays a grade and an option for the user to review their answers
-The user can go forward through the questions by pressing the “next” button
-The user’s answers are displayed and the correct answers are displayed, if they got the question wrong
+1. User clicks on the quiz button
+2. User inputs an answer to the first question
+3. User is ready to move onto the next question
+4. User can press the “next” button to move onto the next question
+5. User continues step 3 and 4 until there are no more questions 
+6. User presses the “submit” button
+7. The quiz is submitted and is automatically graded
+8. Program displays a grade and an option for the user to review their answers
+9. The user can go forward through the questions by pressing the “next” button
+10. The user’s answers are displayed and the correct answers are displayed, if they got the question wrong
 ## Primary Postconditions
 * user completes the quiz
  
 ## Alternate Sequences
 * Step 5 alt. seq.
-User wants to go back to a previous question
-User can press the “previous” button to move back to the previous question
+1. User wants to go back to a previous question
+2. User can press the “previous” button to move back to the previous question
 *Step 9 alt. Seq.
-User can go backward through the questions by pressing the “previous” button
+1. User can go backward through the questions by pressing the “previous” button
 *Step 2 alt. Seq.
-User can exit the quiz at anytime
-### Alternate Trigger
-
+1. User can exit the quiz at anytime
 ### Alternate Postconditions
 *if user exits the quiz, the user does not need to complete the quiz
 
