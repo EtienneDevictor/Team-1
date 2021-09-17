@@ -538,3 +538,84 @@ User 1 decides to share notes with users for them to view/edit. A group is creat
 ### Alternate Trigger
 Any of the users can prompt the group creation
 
+**Use Case Name: Be able to delete the account**
+## Summary
+The user will have the option to delete their account
+## Actors
+1. The user
+## Preconditions
+* The user has an account
+## Triggers
+*The user clicks on the “Delete account” button
+ 
+## Primary Sequence
+1. The user enters log-in info to confirm identity
+2. The user will be asked if they are sure if they wish to delete their account
+3. The user confirms and the account is deleted
+## Primary Postconditions
+* The account will be deleted
+## Alternate Sequences
+* Step 3 alt. Seq.
+1. The user does not confirm
+* Step 1 alt. Seq.
+1. The user enters incorrect log-in information
+2. The user will be asked to re-enter info
+### Alternate Trigger
+None
+### Alternate Postconditions
+* The user retains their account
+ 
+**Use Case Name: Create time blocks (using markdown notes) (mandatory)**
+## Summary
+The user will have the option to create time blocks in order to better manage their time and workflow.
+## Actors
+1. The user
+## Preconditions
+* The user has an account
+## Triggers
+*The user clicks on the “Create Time Block” button
+ 
+## Primary Sequence
+1. The user enters a name for the time block
+2. The user chooses a subject, flash cards, or set of notes to input into the time block
+3. The user chooses how long the time block will last
+4. The user adds the time block to their schedule
+## Primary Postconditions
+* The time block will be created
+## Alternate Sequences
+* Step 1-3 alt. Seq.
+1. The user clicks the exit button
+### Alternate Trigger
+* The user will click the “Edit Time Block” button, returning to step one of the Primary Sequence
+### Alternate Postconditions
+* The user will be reminded once their time block starts.
+* No time block is created
+
+**Use Case Name: Visualization of time spent on studying each day (optinal)**
+## Summary
+The user is able to access a graph in order to visualize their studying through a designated time period
+## Actors
+1. The user
+## Preconditions
+* The user is logged-in
+*The user has studied previously
+## Triggers
+*The user clicks on the “Visualize Studying” button
+ 
+## Primary Sequence
+1.  The user is presented with the option to compare their studying day by day, week by week, or month by month. By default, the graph will display day by day studying
+2. The user is given a graph bar graph (Y-axis represents time spent studying, and X-axis is the chosen time period) that displays the total amount of time spent studying, the individual time periods are color coded by subject.
+3. The user may click or hover on a time period to view their exact studying times, as well as other relevant info
+## Primary Postconditions
+* The user is given pertinent information about their studying.
+* The user exits the visualization
+## Alternate Sequences
+* Steps 2-3 alt. Seq.
+1. The user clicks on one of the buttons that represent a time period i.e. day by day, week by week, month by month
+2. The graph rearranges to display the relevant graph
+* Step 3 alt. Seq.
+1. The user is presented with their exact studying times and other studying info
+### Alternate Trigger
+None
+### Alternate Postconditions
+None
