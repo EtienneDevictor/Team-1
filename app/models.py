@@ -1,7 +1,7 @@
 from app import db
 from app import login
 from datetime import datetime
-from werkzeug.security import check_password_hash, generate _password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import UserMixin
 
 class User(db.Model):
@@ -11,7 +11,7 @@ class User(db.Model):
 	password_hash = db.Column(db.String(128))
 
 	def __repr__(self):
-		return f'<User {username}>'
+		return f'<User { self.username }>'
 
 	def username_exists(self, username):
 		for user in User:
