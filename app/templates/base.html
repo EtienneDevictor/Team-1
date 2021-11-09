@@ -1,1 +1,25 @@
 <!DOCTYPE html>
+<html>
+    <head>
+        {% if title %}
+        <title> {{ title }} </title>
+        {% else %}
+        <title> Home </title>
+        {% endif %}
+    </head>
+
+    <body>
+        <h1>{{ header }}</h1> 
+        {% with messages = get_flashed_messages() %} <!--flashed messages-->
+        {% if messages %}
+        <ul>
+           {% for message in messages %} 
+            <li> {{ message }} </li>
+        </ul>
+        {% endif %}
+        {% endwith %}
+        <a href="link"> link name</a> <!--insert links here to your any routes you create-->
+        <hr>
+        {% block content %} {% endblock %}
+    </body>
+</html>
