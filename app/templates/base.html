@@ -13,8 +13,9 @@
         {% with messages = get_flashed_messages() %} <!--flashed messages-->
         {% if messages %}
         <ul>
-           {% for message in messages %} 
+            {% for message in messages %} 
             <li> {{ message }} </li>
+	    {% endfor %}
         </ul>
         {% endif %}
         {% endwith %}

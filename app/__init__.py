@@ -10,11 +10,11 @@ app_obj = Flask(__name__)
 app_obj.config.from_mapping(
 	SECRET_KEY = 'who cares',
 	# location of the app database
-	SQLALCHEMY_DATABASE_URE = 'sqlite:///' + 0s.path.join(basedir, 'app.db'),
-	SQLACHEMY_TRACK_MODIFICATIONS = False,
+	SQLALCHEMY_DATABASE_URE = 'sqlite:///' + os.path.join(basedir, 'app.db'),
+	SQLALCHEMY_TRACK_MODIFICATIONS = False,
 )
 
-db = SQLAchemy(app_obj)
+db = SQLAlchemy(app_obj)
 
 login = LoginManager(app_obj)
 login.login_view = 'login'
