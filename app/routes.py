@@ -46,3 +46,10 @@ def login():
             redirect('/login')
         login_user(user, remember  = form.remember_me.data)
     return render_template("login.html", title = title, form = form)
+
+@app_obj.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    flash('User logged out')
+    return redirect('/login')
