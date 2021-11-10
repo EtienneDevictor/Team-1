@@ -23,9 +23,11 @@ def signup():
     form = LoginForm()
     if form.validate_on_submit():
         flash("attempting to create an account")
-        if User.email_exists(form.email.data):
-            flash('The provided email already belong to an account')
-        elif User.username_exists(form.username.data):
+        user = User.query.filter_by(username=form.username.data)
+        user2 = User.query.filter_by(username=form.username.data)
+        if user is not None:
+                flash('The username is already taken')
+        elif user2 is not None:
             flash('The provided username already belongs to another account')
         else:
             password_hash = User.generate_password_hash(form.password.data)
