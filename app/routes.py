@@ -4,7 +4,7 @@ from app.forms import LoginForm
 from flask import render_template, escape, flash, redirect
 from flask_login import current_user, login_user, login_required
 
-@app_obj.route('/deleteaccount')
+@app_obj.route('/deleteaccount', methods=['GET', 'POST'])
 def delete():
     form = LoginForm()
     if form.validate_on_submit():
@@ -17,7 +17,7 @@ def delete():
         flash(f'{form.username} has been deleted')
     return render_template("delete.html", title = 'Delete Account Page', form = form)
 
-@app_obj.route('/signup', methods=['Get', 'Post'])
+@app_obj.route('/signup', methods=['GET', 'POST'])
 def signup():
     header = 'Register Account'
     form = LoginForm()
@@ -40,10 +40,11 @@ def login():
     title = 'Login'
     form = LoginForm()
     if form.validate_on_submit():
+        redirect('/deleteaccount')
         user = User.query.filter_by(username = form.username.data)
         if user is None or not user.check_password(form.password.data):
             flash('Invalid username or password')
-            redirect('/login')
+            redirect('/')
         login_user(user, remember  = form.remember_me.data)
     return render_template("login.html", title = title, form = form)
 
