@@ -6,7 +6,7 @@ from flask_login import current_user, login_user, login_required
 
 @app_obj.route('/')
 def home():
-    return redirect('/signup')
+    return render_template('home.html')
 
 @app_obj.route('/deleteaccount', methods=['GET', 'POST'])
 def delete():
@@ -27,17 +27,17 @@ def signup():
     form = SignInForm()
     if form.validate_on_submit():
         flash("attempting to create an account")
-        user = User.query.filter_by(username=form.username.data)
-        user2 = User.query.filter_by(username=form.username.data)
-        if user is not None:
+        username = User.query.filter_by(username=form.username.data).first()
+        email = User.query.filter_by(email=form.email.data).first()
+        if username is not None:
                 flash('The username is already taken')
-        elif user2 is not None:
+        elif email is not None:
             flash('The provided username already belongs to another account')
         else:
-            password_hash = User.generate_password_hash(form.password.data)
-            user = User(username=form.username.data, email=form.email.data, password_hash=password_hash)
+            user = User(username=form.username.data, email=form.email.data)
+            user.set_password(form.password.data)
             db.session.add(user)
-            db.session.commit(user)
+            db.session.commit()
             return redirect('/')
     return render_template("signup.html", header=header, title='Sign Up Page', form=form)
 

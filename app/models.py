@@ -14,18 +14,6 @@ class User(UserMixin, db.Model):
 	def __repr__(self):
 		return f'<User { self.username }>'
 
-	def username_exists(self, username):
-		for user in User:
-			if (username == user.username):
-				return True
-		return False
-
-	def email_exists(self, email):
-		for user in User:
-			if (email == user.email):
-				return True
-		return False
-
 	def check_password(self, password):
 		return check_password_hash(self.password_hash, password)
 
