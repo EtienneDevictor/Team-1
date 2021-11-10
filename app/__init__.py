@@ -10,7 +10,7 @@ app_obj = Flask(__name__)
 app_obj.config.from_mapping(
 	SECRET_KEY = 'who cares',
 	# location of the app database
-	SQLALCHEMY_DATABASE_URE = 'sqlite:///' + os.path.join(basedir, 'app.db'),
+	SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db'),
 	SQLALCHEMY_TRACK_MODIFICATIONS = False,
 )
 
