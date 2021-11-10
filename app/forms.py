@@ -4,10 +4,11 @@ from wtforms.validators import DataRequired
 
 class LoginForm(FlaskForm):
 	username = StringField('User', validators=[DataRequired()])
-	password = PasswordField('password')
+	email = StringField('email', validators=[DataRequired()])
+	password = PasswordField('password', validators=[DataRequired()])
 	remember_me = BooleanField('Remember Me')
 
 	submit = SubmitField('Sign in')
-	signup = SubmitField('Sign up')
+	register = SubmitField('Sign up')
         
 	delete = SubmitField('Delete Account')
