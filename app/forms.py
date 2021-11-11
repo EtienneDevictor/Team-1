@@ -21,4 +21,5 @@ class createFlaskCard(FlaskForm):
 	title = StringField('Title of the Card', validators=[DataRequired()])
 	image = FileField(u'Image File (jpg only)', [validators.reqexp(u'^[/\\]\.jpg$')])
 	text = StringField('Text inside the flashcard')
+	front = BooleanField('Image on the front of the flash card')
 	create = SubmitField('Create FlashCard')

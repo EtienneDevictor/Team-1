@@ -1,8 +1,9 @@
+from flask_login.utils import logout_user
 from app import db, app_obj
 from app.models import User
 from app.forms import LoginForm, SignInForm
 from flask import render_template, escape, flash, redirect
-from flask_login import current_user, login_user, login_required
+from flask_login import current_user, login_user, login_required, logout_user
 
 @app_obj.route('/')
 def home():
