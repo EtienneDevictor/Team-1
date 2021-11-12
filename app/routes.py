@@ -1,13 +1,17 @@
 from flask_login.utils import logout_user
 from app import db, app_obj
 from app.models import User
-from app.forms import LoginForm, SignInForm
+from app.forms import LoginForm, SignInForm, createFlashCardForm
 from flask import render_template, escape, flash, redirect
 from flask_login import current_user, login_user, login_required, logout_user
+from werkzeug.utils import secure_filename
 
 @app_obj.route('/')
 def home():
-    return render_template('home.html')
+    form = createFlashCardForm()
+       
+        
+    return render_template('home.html', form=form)
 
 @app_obj.route('/deleteaccount', methods=['GET', 'POST'])
 def delete():

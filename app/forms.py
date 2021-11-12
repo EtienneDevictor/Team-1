@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, FileField, validators
+from wtforms import StringField, PasswordField, BooleanField, SubmitField 
+from flask_wtf.file import FileField, FileAllowed
 from wtforms.validators import DataRequired
 
 class SignInForm(FlaskForm):
@@ -17,9 +18,9 @@ class LoginForm(FlaskForm):
 	submit = SubmitField('Login')
 	delete = SubmitField('Delete Account')
  
-class createFlaskCard(FlaskForm):
+class createFlashCardForm(FlaskForm):
 	title = StringField('Title of the Card', validators=[DataRequired()])
-	image = FileField(u'Image File (jpg only)', [validators.reqexp(u'^[/\\]\.jpg$')])
+	image = FileField('Image File (jpg only)', validators=[FileAllowed(['jpg'])])
 	text = StringField('Text inside the flashcard')
 	front = BooleanField('Image on the front of the flash card')
 	create = SubmitField('Create FlashCard')

@@ -1,0 +1,25 @@
+% extends 'base.html' %
+% block content %
+    <h1> Create a FlaskCard </h1>
+    <form action ="" method="POST" enctype="multipart/form-data" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.title.label }} <br>
+            {{ form.title(size = 128) }}
+        </p>
+        <p>
+            {{ form.image.label }}
+            {{ form.image() }}
+        </p>
+        <p>
+            {{ form.front() }}
+        </p>
+        <p>
+            {{ form.text.label }} <br>
+            {{ form.text() }}
+        </p>
+        <p>
+            {{ form.create() }}
+        </p>
+    </form>
+% endblock %
