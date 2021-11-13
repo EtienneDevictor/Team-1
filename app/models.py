@@ -28,8 +28,8 @@ class CardList(UserMixin, db.Model) :
     title = db.Column(db.String(256), index=True)
     flashCard = db.relationship('FlashCard', backref='author', lazy='dynamic')
  
-def __repr__(self):
-    return f'{self.title}'
+    def __repr__(self):
+        return f'{self.title}'
 
 class FlashCard(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -37,6 +37,9 @@ class FlashCard(db.Model):
     title = db.Column(db.String(256), index=True)
     content = db.Column(db.String(256), index=True)
     imagePath = db.Column(db.String(128), index=True)
+    
+    def __repr__(self):
+        return self.title
     
      
  
