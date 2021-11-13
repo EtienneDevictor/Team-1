@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
 <h1> {{ title }} </h1>
+<form action = "" method = "POST"novalidate>
+	{{ form.hidden_tag() }}
 <p>
 	{{ form.username.label }} <br>
 	{{ form.username(size=32)}}
@@ -12,5 +14,5 @@
 <p> 
     	{{ form.delete() }}
 </p>
-
+</form>
 {% endblock %}
