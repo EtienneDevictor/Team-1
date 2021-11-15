@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField 
 from flask_wtf.file import FileField, FileAllowed
+from wtforms import validators
 from wtforms.validators import DataRequired
 
 class SignInForm(FlaskForm):
@@ -24,3 +25,8 @@ class createFlashCardForm(FlaskForm):
 	text = StringField('Text inside the flashcard')
 	front = BooleanField('Image on the front of the flash card')
 	create = SubmitField('Create FlashCard')
+
+class uploadNotes(FlaskForm):
+	title = StringField("Title of the Notes", validators = [DataRequired()])
+	notes = FileField('Notes (.md format)', validators = [FileAllowed(['md'])])
+	save = SubmitField('Save notes')
