@@ -1,8 +1,8 @@
 from flask_login.utils import logout_user
 from app import db, app_obj
 import app
-from app.models import User, Class, Notes, Cardlist, FlashCard
-from app.forms import LoginForm, SignInForm, createFlashCardForm, fTextInFileForm, uploadNotes
+from app.models import User, Class, FlashCard
+from app.forms import LoginForm, SignInForm, createFlashCardForm, uploadNotes, Class, fTextInFileForm
 from flask import render_template, escape, flash, redirect
 from flask_login import current_user, login_user, login_required, logout_user
 from werkzeug.utils import secure_filename
@@ -108,3 +108,16 @@ def logout():
     logout_user()
     flash('User logged out')
     return redirect('/login')
+
+@app_obj.route("/ClassList")
+@login_required
+def class_selector():
+    user_classes = Class.query.filter_by(user_id=current_user)
+    form = Class()
+    if form.validate_on_submit:
+        category = Class(title=form.title.data, user_id=current_user)
+        db.session.add(category)
+        db.session.commit()
+        return redirect('/ClassList')
+    return render_template('classes.html', form=form, user_classes=user_classes)
+
