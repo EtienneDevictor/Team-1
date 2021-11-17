@@ -1,6 +1,6 @@
-% extends 'base.html' %
-% block content %
-    <h1> Create a FlaskCard </h1>
+{% extends 'base.html' %}
+{% block content %}
+    <h1> Create a FlashCard </h1>
     <form action ="" method="POST" enctype="multipart/form-data" novalidate>
         {{ form.hidden_tag() }}
         <p>
@@ -14,12 +14,12 @@
         <p>
             {{ form.front() }}
         </p>
-        <p>
+        <p>    
             {{ form.text.label }} <br>
-            {{ form.text() }}
+            <textarea name="text" form="form" rows="5" cols="80"> Insert Text Here </textarea>
         </p>
         <p>
             {{ form.create() }}
         </p>
     </form>
-% endblock %
+{% endblock %}

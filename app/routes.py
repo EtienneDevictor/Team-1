@@ -70,6 +70,15 @@ def find():
         flashcard = FlashCard.query.filter(FlashCard.content.contains(form.text.data))
         return render_template("flashcards.html", title = title, flashcards = flashcard, form = form)
     return render_template("find.html", title = title, form = form)
+
+@app_obj.route('/createflashcard', methods = ['GET', 'POST'])
+def create():
+    title = "Create Flashcard"
+    form = createFlashCardForm()
+    if form.validate_on_submit():
+        flash('Flashcard Created')
+    return render_template("createflashcard.html", title = title, form = form)
+
             
 @app_obj.route('/uploadnotes', methods = ['GET', 'POST'])
 #@login_required
