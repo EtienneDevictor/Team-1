@@ -9,7 +9,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(128), index=True, unique=True)
     password_hash = db.Column(db.String(128))
-    flashCard = db.relationship('CardList', backref='author', lazy='dynamic' )
+    flashCard = db.relationship('CardList', backref='user', lazy='dynamic' )
     is_active = False
 
     def __repr__(self):
@@ -26,8 +26,8 @@ class Class(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     title = db.Column(db.String(128), index=True)
-    cardlist = db.relationship('CardList', backref='author', lazy='dynamic')
-    notes = db.relationship('Notes', backref='author', lazy='dynamic')
+    cardlist = db.relationship('CardList', backref='user', lazy='dynamic')
+    notes = db.relationship('Notes', backref='user', lazy='dynamic')
     
     def __repr__(self):
         return f'{self.title}'
@@ -46,12 +46,13 @@ class CardList(UserMixin, db.Model) :
     id = db.Column(db.Integer, primary_key=True)
     class_id = db.Column(db.Integer, db.ForeignKey('classes.id'))
     title = db.Column(db.String(128), index=True)
-    flashCard = db.relationship('Class', backref='author', lazy='dynamic')
+    flashCard = db.relationship('Class', backref='user', lazy='dynamic')
  
     def __repr__(self):
         return f'{self.title}'
 
 class FlashCard(db.Model):
+    __tablename__ = 'flashcards'
     id = db.Column(db.Integer, primary_key=True)
     cardList_id = db.Column(db.Integer, db.ForeignKey('cardlists.id'))
     title = db.Column(db.String(256), index=True)

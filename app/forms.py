@@ -24,3 +24,8 @@ class createFlashCardForm(FlaskForm):
 	text = StringField('Text inside the flashcard')
 	front = BooleanField('Image on the front of the flash card')
 	create = SubmitField('Create FlashCard')
+
+class fTextInFileForm(FlaskForm):
+	text = StringField('Enter text to search for flashcard', validators=[DataRequired()])
+		
+	find = SubmitField('Find FlashCard') 

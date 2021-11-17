@@ -1,7 +1,7 @@
 from flask_login.utils import logout_user
 from app import db, app_obj
-from app.models import User
-from app.forms import LoginForm, SignInForm, createFlashCardForm
+from app.models import User, Class, Notes, CardList, FlashCard
+from app.forms import LoginForm, SignInForm, createFlashCardForm, fTextInFileForm
 from flask import render_template, escape, flash, redirect
 from flask_login import current_user, login_user, login_required, logout_user
 from werkzeug.utils import secure_filename
@@ -57,6 +57,17 @@ def login():
             return redirect('/login')
         login_user(user, remember  = form.remember_me.data)
     return render_template("login.html", title = title, form = form)
+
+@app_obj.route('/find', methods = ['GET', 'POST'])
+def find(): 
+    title = 'Find Flashcard'
+    form = fTextInFileForm()
+    if form.validate_on_submit(): 
+        flash(f'Loading flashcards with {form.text}')
+        flashcard = FlashCard.query.filter_by(form.content.data in content).all()
+        return return_template("flashcards.html", title = title, flashcards = flashcard)
+    return render_template("find.html", title = title, form = form)
+            
 
 @app_obj.route("/logout")
 @login_required
