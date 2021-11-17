@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField 
 from flask_wtf.file import FileField, FileAllowed
+from wtforms import validators
 from wtforms.validators import DataRequired
 
 class SignInForm(FlaskForm):
@@ -29,3 +30,8 @@ class fTextInFileForm(FlaskForm):
 	text = StringField('Enter text to search for flashcard', validators=[DataRequired()])
 		
 	find = SubmitField('Find FlashCard') 
+
+class uploadNotes(FlaskForm):
+	title = StringField("Title of the Notes", validators = [DataRequired()])
+	notes = FileField('Notes (.md format)', validators = [FileAllowed(['md'])])
+	save = SubmitField('Save notes')

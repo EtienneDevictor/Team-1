@@ -4,12 +4,12 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import UserMixin
 
 class User(UserMixin, db.Model):
-    __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(128), index=True, unique=True)
     password_hash = db.Column(db.String(128))
-    flashCard = db.relationship('CardList', backref='user', lazy='dynamic' )
+    classes = db.relationship('Class', backref='author', lazy='dynamic')
+
     is_active = False
 
     def __repr__(self):
@@ -21,40 +21,39 @@ class User(UserMixin, db.Model):
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
         
-class Class(UserMixin, db.Model):
-    __tablename__ = 'classes'
+class Class(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     title = db.Column(db.String(128), index=True)
-    cardlist = db.relationship('CardList', backref='user', lazy='dynamic')
-    notes = db.relationship('Notes', backref='user', lazy='dynamic')
+
+    cardlist = db.relationship('Cardlist', backref='author', lazy='dynamic')
+    notes = db.relationship('Notes', backref='author', lazy='dynamic')
     
     def __repr__(self):
         return f'{self.title}'
     
 class Notes(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    class_id = db.Column(db.Integer, db.ForeignKey('classes.id'))
+    class_id = db.Column(db.Integer, db.ForeignKey('class.id'))
     title = db.Column(db.String(128), index=True)
     mdFilePath = db.Column(db.String(128), index=True)
     
     def __repr__(self):
         return f'{self.title}'
-  
-class CardList(UserMixin, db.Model) :
-    __tablename__ = 'cardlists'
+     
+class Cardlist(db.Model) :
     id = db.Column(db.Integer, primary_key=True)
-    class_id = db.Column(db.Integer, db.ForeignKey('classes.id'))
+    class_id = db.Column(db.Integer, db.ForeignKey('class.id'))
     title = db.Column(db.String(128), index=True)
-    flashCard = db.relationship('Class', backref='user', lazy='dynamic')
+    flashCard = db.relationship('FlashCard', backref='author', lazy='dynamic')
  
     def __repr__(self):
         return f'{self.title}'
-
+    
 class FlashCard(db.Model):
     __tablename__ = 'flashcards'
     id = db.Column(db.Integer, primary_key=True)
-    cardList_id = db.Column(db.Integer, db.ForeignKey('cardlists.id'))
+    cardList_id = db.Column(db.Integer, db.ForeignKey('cardlist.id'))
     title = db.Column(db.String(256), index=True)
     content = db.Column(db.String(256), index=True)
     imagePath = db.Column(db.String(128), index=True)
@@ -63,9 +62,6 @@ class FlashCard(db.Model):
         return self.title
     
      
- 
-
-
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
