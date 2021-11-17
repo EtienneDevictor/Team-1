@@ -31,6 +31,11 @@ class createFlashCardForm(FlaskForm):
 	front = BooleanField('Image on the front of the flash card')
 	create = SubmitField('Create FlashCard')
 
+class fTextInFileForm(FlaskForm):
+	text = StringField('Enter text to search for flashcard', validators=[DataRequired()])
+		
+	find = SubmitField('Find FlashCard') 
+
 class uploadNotes(FlaskForm):
 	title = StringField("Title of the Notes", validators = [DataRequired()])
 	notes = FileField('Notes (.md format)', validators = [FileAllowed(['md'])])

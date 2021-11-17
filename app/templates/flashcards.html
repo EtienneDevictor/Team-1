@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<h1> {{ title }} </h1>
+<form action = "" method = "POST"novalidate>
+	{{ form.hidden_tag() }}
+
+	{% for c in flashcards %}
+		<p> {{ c.title }} contains text </p>
+	{% endfor %}
+</form>
+
+{% endblock %}

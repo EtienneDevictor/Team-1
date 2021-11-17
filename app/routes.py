@@ -1,8 +1,8 @@
 from flask_login.utils import logout_user
 from app import db, app_obj
 import app
-from app.models import User, Class
-from app.forms import LoginForm, SignInForm, createFlashCardForm, uploadNotes, Class
+from app.models import User, Class, FlashCard
+from app.forms import LoginForm, SignInForm, createFlashCardForm, uploadNotes, Class, fTextInFileForm
 from flask import render_template, escape, flash, redirect
 from flask_login import current_user, login_user, login_required, logout_user
 from werkzeug.utils import secure_filename
@@ -61,6 +61,16 @@ def login():
         login_user(user, remember  = form.remember_me.data)
     return render_template("login.html", title = title, form = form)
 
+@app_obj.route('/find', methods = ['GET', 'POST'])
+def find(): 
+    title = 'Find Flashcard'
+    form = fTextInFileForm()
+    if form.validate_on_submit(): 
+        flash(f'Loading flashcards with {form.text}')
+        flashcard = FlashCard.query.filter(FlashCard.content.contains(form.text.data))
+        return render_template("flashcards.html", title = title, flashcards = flashcard, form = form)
+    return render_template("find.html", title = title, form = form)
+            
 @app_obj.route('/uploadnotes', methods = ['GET', 'POST'])
 #@login_required
 def notes():
@@ -102,8 +112,3 @@ def class_selector():
         return redirect('/ClassList')
     return render_template('classes.html', form=form, user_classes=user_classes)
 
-@app_obj.route("/ClassList")
-@login_required
-def item_selector():
-    flashcards = 
-    items
