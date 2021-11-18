@@ -11,8 +11,13 @@
     <p>
         {{ form.password.label }}<br>
         {{ form.password(size = 32) }}
+    </p>
     <p>
-        {{ form.submit() }} <br>
+        {{ form.remember_me.label }}
+        {{ form.remember_me() }}
+    </p>
+    <p>
+        {{ form.submit() }} 
         <a href="/signup"> Sign Up </a>
     </p>
 </form>
