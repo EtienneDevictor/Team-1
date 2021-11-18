@@ -5,7 +5,7 @@
         {% if flashcards %}
         <ul>    
             {% for f in flashcards %}
-            <li> {{ f.title }} </li>
+            <li> {{ f.title }}: {{ f.content }} </li>
         {% endfor %}
         </ul>
         {% endif %}

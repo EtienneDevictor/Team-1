@@ -6,7 +6,7 @@
     {% if flashcards %}
 	<ul>
     {% for c in flashcards %}
-		<li> {{ c.title }} contains text </li>
+		<li> {{ c.title }} : {{ c.text }} </li>
 	{% endfor %}
     </ul>
     {% endif %}

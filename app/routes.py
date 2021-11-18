@@ -79,17 +79,17 @@ def create():
     title = "Create Flashcard"
     form = createFlashCardForm()
     if form.validate_on_submit():
-        #title = FlashCard.query.filter_by(title=form.title.data).first()
-        #content = FlashCard.query.filter_by(content=form.text.data).first()
-        #if title is None:
-        #        flash('The FlashCard needs a title')
-        #elif content is None:
-        #    flash('The content has no text')
-        #else:
-        flashcard = FlashCard(title=form.title.data, content=form.text.data)
-        db.session.add(flashcard)
-        db.session.commit()
-        flash(f'Flashcard Created: {flashcard}')
+        title = form.title.data
+        content = form.text.data
+        if title is None:
+                flash('The FlashCard needs a title')
+        elif content is None:
+            flash('The content has no text')
+        else:
+            flashcard = FlashCard(title=form.title.data, content=form.text.data)
+            db.session.add(flashcard)
+            db.session.commit()
+            flash(f'Flashcard Created: {flashcard}')
     return render_template("createflashcard.html", title = title, form = form)
 
 @app_obj.route('/viewflashcard', methods = ['GET', 'POST'])
@@ -98,9 +98,7 @@ def view():
     title = "View Flashcards"
     flashcards = FlashCard.query.all()
     return render_template("viewflashcards.html", title = title, flashcards = flashcards)
-    
-    
-            
+                
 @app_obj.route('/uploadnotes', methods = ['GET', 'POST'])
 #@login_required
 def notes():

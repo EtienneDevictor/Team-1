@@ -16,8 +16,7 @@
         </p>
         <p>    
             {{ form.text.label }} <br>
-            <textarea name="text" form="form" rows="5" cols="80"> Insert Text Here </textarea> 
-            <!-- {{ form.text(size = 128) }} -->
+            {{ form.text(cols="50",rows="5") }}
         </p>
         <p>
             {{ form.create() }}
