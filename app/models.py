@@ -11,7 +11,7 @@ class User(UserMixin, db.Model):
     classes = db.relationship('Class', backref='author', lazy='dynamic')
 
     def __repr__(self):
-        return f'<User { self.username }>'
+        return f'{ self.username }'
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)

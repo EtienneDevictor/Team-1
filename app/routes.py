@@ -130,13 +130,13 @@ def logout():
     flash('User logged out')
     return redirect('/login')
 
-@app_obj.route("/ClassList")
+@app_obj.route("/ClassList", methods = ['GET', 'POST'])
 @login_required
 def class_selector():
-    user_classes = Class.query.filter_by(user_id=current_user)
-    form = Class()
-    if form.validate_on_submit:
-        category = Class(title=form.title.data, user_id=current_user)
+    user_classes = Class.query.filter_by(user_id=current_user.id)
+    form = ClassCreator()
+    if form.validate_on_submit():
+        category = Class(title=form.title.data, user_id=current_user.id)
         db.session.add(category)
         db.session.commit()
         return redirect('/ClassList')
