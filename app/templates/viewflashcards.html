@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1> {{ title }} </h1>
+        <p>
+        {% if flashcards %}
+        <ul>    
+            {% for f in flashcards %}
+            <li> {{ f.title }} </li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+        </p>
+    </form>
+{% endblock %}
+

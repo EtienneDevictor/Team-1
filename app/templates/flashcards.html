@@ -3,10 +3,13 @@
 <h1> {{ title }} </h1>
 <form action = "" method = "POST"novalidate>
 	{{ form.hidden_tag() }}
-
-	{% for c in flashcards %}
-		<p> {{ c.title }} contains text </p>
+    {% if flashcards %}
+	<ul>
+    {% for c in flashcards %}
+		<li> {{ c.title }} contains text </li>
 	{% endfor %}
+    </ul>
+    {% endif %}
 </form>
 
 {% endblock %}

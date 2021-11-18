@@ -9,7 +9,6 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(128), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     classes = db.relationship('Class', backref='author', lazy='dynamic')
-    is_active = False
 
     def __repr__(self):
         return f'<User { self.username }>'
@@ -64,7 +63,7 @@ class FlashCard(db.Model):
     imagePath = db.Column(db.String(128), index=True)
     
     def __repr__(self):
-        return self.title
+        return f'{self.title}'
     
      
 @login.user_loader
