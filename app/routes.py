@@ -2,7 +2,7 @@ from flask_login.utils import logout_user
 from app import db, app_obj
 import app
 from app.models import User, Class, FlashCard
-from app.forms import LoginForm, SignInForm, createFlashCardForm, uploadNotes, Class, fTextInFileForm
+from app.forms import LoginForm, SignInForm, createFlashCardForm, uploadNotes, ClassCreator, fTextInFileForm
 from flask import render_template, escape, flash, redirect
 from flask_login import current_user, login_user, login_required, logout_user
 from werkzeug.utils import secure_filename
@@ -17,6 +17,7 @@ def home():
     return render_template('home.html', form=form)
 
 @app_obj.route('/deleteaccount', methods=['GET', 'POST'])
+@login_required
 def delete():
     form = LoginForm()
     if form.validate_on_submit():
@@ -57,8 +58,10 @@ def login():
         user = User.query.filter_by(username = form.username.data).first()
         if user is None or not user.check_password(form.password.data):
             flash('Invalid username or password')
+            is_active = False
             return redirect('/login')
         login_user(user, remember  = form.remember_me.data)
+        is_active = True
     return render_template("login.html", title = title, form = form)
 
 @app_obj.route('/find', methods = ['GET', 'POST'])
