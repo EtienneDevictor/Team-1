@@ -49,10 +49,13 @@ class uploadNotes(FlaskForm):
 class FlashCardForm(FlaskForm):
     next = SubmitField('Next')
     previous = SubmitField('Previous')
-    flip = SubmitField('Flip')
-    
+<<<<<<< HEAD
+
 class QuizForm(FlaskForm):
     answer = StringField('Answer')
     next = SubmitField('Next')
     previous = SubmitField('Previous')
     submit = SubmitField('Submit')
+=======
+    flip = SubmitField('flip')
+>>>>>>> 65a0532c6a87587e71a61468fb25d9d1fc6aee89

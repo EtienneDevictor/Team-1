@@ -1,8 +1,9 @@
+from flask.helpers import url_for
 from flask_login.utils import logout_user
 from app import db, app_obj
 import app
-from app.models import User, Class, FlashCard, Cardlist
-from app.forms import LoginForm, SignInForm, createFlashCardForm, uploadNotes, ClassCreator, fTextInFileForm, ListCreator, FlashCardForm, QuizForm
+from app.models import *
+from app.forms import *
 from flask import render_template, escape, flash, redirect, session
 from flask_login import current_user, login_user, login_required, logout_user
 from werkzeug.utils import secure_filename
@@ -58,7 +59,7 @@ def login():
         if user is None or not user.check_password(form.password.data):
             flash('Invalid username or password')
             is_active = False
-            return redirect('/login')
+            return redirect('/')
         login_user(user, remember  = form.remember_me.data)
         is_active = True
         flash('Successfully logged in')
@@ -70,8 +71,13 @@ def find():
     form = fTextInFileForm()
     if form.validate_on_submit(): 
         flash(f'Loading flashcards with {form.text.data}')
-        flashcard = FlashCard.query.filter(FlashCard.content.contains(form.text.data))
-        return render_template("viewflashcards.html", title = title, flashcards = flashcard)
+        user_classes = Class.query.filter_by(user_id = current_user.id)
+        flashlists = []
+        for category in user_classes:
+            flashlists.extend(Cardlist.query.filter_by(class_id=category.id))
+        flashcards = FlashCard.query.filter(FlashCard.content.contains(form.text.data), FlashCard.list_id)
+        
+        return render_template("viewflashcards.html", title = title, flashcards = flashcards)
     return render_template("find.html", title = title, form = form)
 
 @app_obj.route('/createflashcard/<int:list_id>', methods = ['GET', 'POST'])
@@ -79,25 +85,30 @@ def create(list_id):
     title = "Create Flashcard"
     form = createFlashCardForm()
     if form.validate_on_submit():
-        title = form.title.data
-        content = form.text.data
-        if title is None:
+        if form.create.data:
+            title = form.title.data
+            content = form.text.data
+            if title is None:
                 flash('The FlashCard needs a title')
-        elif content is None:
-            flash('The content has no text')
-        else:
-            flashcard = FlashCard(title=form.title.data, content=form.text.data, cardList_id=list_id)
-            db.session.add(flashcard)
-            db.session.commit()
-            flash(f'Flashcard Created: {flashcard}')
-    return render_template("createflashcard.html", title = title, form = form)
+            elif content is None:
+                flash('The content has no text')
+            else:
+                flashcard = FlashCard(title=form.title.data, content=form.text.data, cardList_id=list_id)
+                db.session.add(flashcard)
+                db.session.commit()
+                form.title.data = ""
+                form.text.data = ""
+                flash(f'Flashcard Created: {flashcard.title}')
+        elif form.back.data:
+            return redirect(f'/flashList/{list_id}')
+    return render_template("createflashcard.html", title = title, form = form, list_id=list_id)
 
-@app_obj.route('/viewflashcard', methods = ['GET', 'POST'])
+@app_obj.route('/viewflashcard/<int:list_id>', methods = ['GET', 'POST'])
 @login_required
-def view(): 
+def view(list_id): 
     title = "View Flashcards"
-    flashcards = FlashCard.query.all()
-    return render_template("viewflashcards.html", title = title, flashcards = flashcards)
+    flashcards = FlashCard.query.filter_by(cardList_id=list_id)
+    return render_template("viewflashcards.html", title = title, flashcards = flashcards, list_id=list_id)
                 
 @app_obj.route('/uploadnotes/<int:class_id>', methods = ['GET', 'POST'])
 #@login_required
@@ -105,20 +116,15 @@ def notes(class_id):
     title = 'Notes'
     form = uploadNotes()
     if form.validate_on_submit():
-        name = form.title.data + '.html'
-        md = markdown.Markdown()
-        file = md.convert(form.notes.data)
-        '''
-        I'm having trouble here
-        not sure how to use os to save the html output from 
-        file into templates folder
-        still need to add into data base as well
-        '''
-        print(os.path.join(app, name))
-        redirect('/name')
-    else:
-        flash('Please enter a markdown file')
-        redirect('/uploadnotes')
+        name = form.title.data
+        file = form.notes.data
+        notes = Notes(class_id = class_id, title = name, mdFilePath = file.save(os.path.join(app_obj.config['UPLOAD_FOLDER'], name)))
+        db.session.add(notes)
+        db.session.commit()
+        flash(f'Notes: {name} Saved')
+        return redirect('/uploadnotes/' + str(class_id))
+    if form.is_submitted():
+        flash('Please enter a md file')
     return render_template('uploadnotes.html', title = title, form = form)
 
 @app_obj.route("/logout")
@@ -170,21 +176,28 @@ def flashlist(list_id):
     
     if form.validate_on_submit:
         if form.next.data:
+            session['front'] = True
             if session['active_card'] == len(flashcards) - 1:
                 session['active_card'] = 0
                 flash('going to the beginning of the list')
             else:
                 session['active_card'] += 1
         elif form.previous.data:
+            session['front'] = True
             if session['active_card'] == 0:
                 session['active_card'] = len(flashcards) - 1
                 flash('going to the end of the list')
             else:
                 session['active_card'] -= 1
+        elif form.flip.data:
+            if session['front']:
+                session['front'] = False
+            else:
+                session['front'] = True
     
     if len(flashcards) == 0:
             return render_template('flashcard.html', form=form, list_id=list_id)
-    return render_template('flashcard.html', form=form, card=flashcards[session['active_card']], list_id=list_id)          
+    return render_template('flashcard.html', form=form, card=flashcards[session['active_card']], front=session['front'], list_id=list_id)          
     
 @app_obj.route("/quiz/<int:list_id>", methods = ['GET', 'POST'])
 @login_required

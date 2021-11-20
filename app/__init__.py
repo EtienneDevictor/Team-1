@@ -6,7 +6,9 @@ import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 app_obj = Flask(__name__)
+UPLOAD_FOLDER = basedir + '/mdFiles'
 
+app_obj.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app_obj.config.from_mapping(
 	SECRET_KEY = 'who cares',
 	# location of the app database

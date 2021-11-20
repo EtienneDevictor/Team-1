@@ -11,15 +11,13 @@
             {{ form.image.label }}
             {{ form.image() }}
         </p>
-        <p>
-            {{ form.front() }}
-        </p>
         <p>    
             {{ form.text.label }} <br>
             {{ form.text(cols="50",rows="5") }}
         </p>
         <p>
-            {{ form.create() }}
+            {{ form.create() }}  
         </p>
+        <a href=/flashList/{{list_id}}> go back to flashlist </a>
     </form>
 {% endblock %}
