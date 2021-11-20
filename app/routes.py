@@ -70,8 +70,13 @@ def find():
     form = fTextInFileForm()
     if form.validate_on_submit(): 
         flash(f'Loading flashcards with {form.text.data}')
-        flashcard = FlashCard.query.filter(FlashCard.content.contains(form.text.data))
-        return render_template("viewflashcards.html", title = title, flashcards = flashcard)
+        user_classes = Class.query.filter_by(user_id = current_user.id)
+        flashlists = []
+        for category in user_classes:
+            flashlists.extend(Cardlist.query.filter_by(class_id=category.id))
+        flashcards = FlashCard.query.filter(FlashCard.content.contains(form.text.data), FlashCard.list_id)
+        
+        return render_template("viewflashcards.html", title = title, flashcards = flashcards)
     return render_template("find.html", title = title, form = form)
 
 @app_obj.route('/createflashcard/<int:list_id>', methods = ['GET', 'POST'])
