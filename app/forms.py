@@ -45,3 +45,7 @@ class uploadNotes(FlaskForm):
     title = StringField("Title of the Notes", validators = [DataRequired()])
     notes = FileField('Notes (.md format)', validators = [FileAllowed(['md'])])
     save = SubmitField('Save notes')
+    
+class FlashCardForm(FlaskForm):
+    next = SubmitField('Next')
+    previous = SubmitField('Previous')

@@ -2,8 +2,8 @@ from flask_login.utils import logout_user
 from app import db, app_obj
 import app
 from app.models import User, Class, FlashCard, Cardlist
-from app.forms import LoginForm, SignInForm, createFlashCardForm, uploadNotes, ClassCreator, fTextInFileForm, ListCreator
-from flask import render_template, escape, flash, redirect
+from app.forms import LoginForm, SignInForm, createFlashCardForm, uploadNotes, ClassCreator, fTextInFileForm, ListCreator, FlashCardForm
+from flask import render_template, escape, flash, redirect, session
 from flask_login import current_user, login_user, login_required, logout_user
 from werkzeug.utils import secure_filename
 import markdown
@@ -74,8 +74,8 @@ def find():
         return render_template("flashcards.html", title = title, flashcards = flashcard, form = form)
     return render_template("find.html", title = title, form = form)
 
-@app_obj.route('/createflashcard', methods = ['GET', 'POST'])
-def create():
+@app_obj.route('/createflashcard/<int:list_id>', methods = ['GET', 'POST'])
+def create(list_id):
     title = "Create Flashcard"
     form = createFlashCardForm()
     if form.validate_on_submit():
@@ -86,7 +86,7 @@ def create():
         elif content is None:
             flash('The content has no text')
         else:
-            flashcard = FlashCard(title=form.title.data, content=form.text.data)
+            flashcard = FlashCard(title=form.title.data, content=form.text.data, cardList_id=list_id)
             db.session.add(flashcard)
             db.session.commit()
             flash(f'Flashcard Created: {flashcard}')
@@ -161,3 +161,28 @@ def inside_class(class_id):
                     cardlists=class_cardlists,
                     notes=class_notes)
 
+@app_obj.route("/flashList/<int:list_id>", methods = ['Get', 'Post'])
+@login_required
+def flashlist(list_id):
+    flashcards = []
+    flashcards.extend(FlashCard.query.filter_by(cardList_id=list_id))
+    form = FlashCardForm()
+    
+    if form.validate_on_submit:
+        if form.next.data:
+            if session['active_card'] == len(flashcards) - 1:
+                session['active_card'] = 0
+                flash('going to the beginning of the list')
+            else:
+                session['active_card'] += 1
+        elif form.previous.data:
+            if session['active_card'] == 0:
+                session['active_card'] = len(flashcards) - 1
+                flash('going to the end of the list')
+            else:
+                session['active_card'] -= 1
+    
+    if len(flashcards) == 0:
+            return render_template('flashcard.html', form=form, list_id=list_id)
+    return render_template('flashcard.html', form=form, card=flashcards[session['active_card']], list_id=list_id)          
+    

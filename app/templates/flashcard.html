@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+{% if card %}
+    <h2> {{ card.title }} </h2>
+    <!--we can add the image here afterwards-->
+    <p> {{ card.content }} </p>
+    <form action="" method="Post" novalidate>
+        <p>
+            {{ form.previous() }}  {{ form.next() }}
+        </p>
+    </form>
+{% else %}
+ <h3> click on the link below to add a card to this empty list</h3>
+{% endif %}
+    <a href=/createflashcard/{{list_id}}>create a new flashcard</a>
+{% endblock %}
