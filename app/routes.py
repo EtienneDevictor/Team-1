@@ -1,7 +1,8 @@
+from flask.helpers import url_for
 from flask_login.utils import logout_user
 from app import db, app_obj
 import app
-from app.models import User, Class, FlashCard, Cardlist
+from app.models import *
 from app.forms import LoginForm, SignInForm, createFlashCardForm, uploadNotes, ClassCreator, fTextInFileForm, ListCreator, FlashCardForm
 from flask import render_template, escape, flash, redirect, session
 from flask_login import current_user, login_user, login_required, logout_user
@@ -115,20 +116,15 @@ def notes(class_id):
     title = 'Notes'
     form = uploadNotes()
     if form.validate_on_submit():
-        name = form.title.data + '.html'
-        md = markdown.Markdown()
-        file = md.convert(form.notes.data)
-        '''
-        I'm having trouble here
-        not sure how to use os to save the html output from 
-        file into templates folder
-        still need to add into data base as well
-        '''
-        print(os.path.join(app, name))
-        redirect('/name')
-    else:
-        flash('Please enter a markdown file')
-        redirect('/uploadnotes')
+        name = form.title.data
+        file = form.notes.data
+        notes = Notes(class_id = class_id, title = name, mdFilePath = file.save(os.path.join(app_obj.config['UPLOAD_FOLDER'], name)))
+        db.session.add(notes)
+        db.session.commit()
+        flash(f'Notes: {name} Saved')
+        return redirect('/uploadnotes/' + str(class_id))
+    if form.is_submitted():
+        flash('Please enter a md file')
     return render_template('uploadnotes.html', title = title, form = form)
 
 @app_obj.route("/logout")

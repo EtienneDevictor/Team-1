@@ -2,13 +2,13 @@
 {% block content %}
 <h1> {{ title }}</h1>
 
-<form action="" method="Post" novalidate>
+<form method=post enctype=multipart/form-data>
 	{{ form.hidden_tag() }}
 	<p>
 		{{ form.title.label }}
-		{{ form.title(size=64) }}
+		{{ form.title(size=64) }}	
 	<p>
-		{{ form.notes.label }} <br>
+	{{ form.notes.label }} <br>
         {{ form.notes() }}
 	</p>
 	<p>
