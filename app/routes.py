@@ -11,10 +11,9 @@ import os
 
 @app_obj.route('/')
 def home():
-    form = createFlashCardForm()
-       
-        
-    return render_template('home.html', form=form)
+    form = createFlashCardForm()       
+    app = 'Study App'    
+    return render_template('home.html', form=form, app=app)
 
 @app_obj.route('/deleteaccount', methods=['GET', 'POST'])
 @login_required
@@ -62,6 +61,7 @@ def login():
             return redirect('/login')
         login_user(user, remember  = form.remember_me.data)
         is_active = True
+        flash('Successfully logged in')
     return render_template("login.html", title = title, form = form)
 
 @app_obj.route('/find', methods = ['GET', 'POST'])
@@ -71,7 +71,7 @@ def find():
     if form.validate_on_submit(): 
         flash(f'Loading flashcards with {form.text.data}')
         flashcard = FlashCard.query.filter(FlashCard.content.contains(form.text.data))
-        return render_template("flashcards.html", title = title, flashcards = flashcard, form = form)
+        return render_template("viewflashcards.html", title = title, flashcards = flashcard)
     return render_template("find.html", title = title, form = form)
 
 @app_obj.route('/createflashcard/<int:list_id>', methods = ['GET', 'POST'])
@@ -186,3 +186,4 @@ def flashlist(list_id):
             return render_template('flashcard.html', form=form, list_id=list_id)
     return render_template('flashcard.html', form=form, card=flashcards[session['active_card']], list_id=list_id)          
     
+
