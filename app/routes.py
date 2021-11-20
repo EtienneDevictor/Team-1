@@ -175,20 +175,27 @@ def flashlist(list_id):
     
     if form.validate_on_submit:
         if form.next.data:
+            session['front'] = True
             if session['active_card'] == len(flashcards) - 1:
                 session['active_card'] = 0
                 flash('going to the beginning of the list')
             else:
                 session['active_card'] += 1
         elif form.previous.data:
+            session['front'] = True
             if session['active_card'] == 0:
                 session['active_card'] = len(flashcards) - 1
                 flash('going to the end of the list')
             else:
                 session['active_card'] -= 1
+        elif form.flip.data:
+            if session['front']:
+                session['front'] = False
+            else:
+                session['front'] = True
     
     if len(flashcards) == 0:
             return render_template('flashcard.html', form=form, list_id=list_id)
-    return render_template('flashcard.html', form=form, card=flashcards[session['active_card']], list_id=list_id)          
+    return render_template('flashcard.html', form=form, card=flashcards[session['active_card']], front=session['front'], list_id=list_id)          
     
 

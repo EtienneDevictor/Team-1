@@ -1,12 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
 {% if card %}
-    <h2> {{ card.title }} </h2>
-    <!--we can add the image here afterwards-->
-    <p> {{ card.content }} </p>
+    {% if front %}
+        <h2> {{ card.title }} </h2>
+    {% else %}
+        <!--we can add the image here afterwards-->
+        <p> {{ card.content }} </p>
+    {% endif %}
     <form action="" method="Post" novalidate>
         <p>
-            {{ form.previous() }}  {{ form.next() }}
+            {{ form.previous() }}    {{ form.flip }}    {{ form.next() }}
         </p>
         <a href=/viewflashcard/{{list_id}}>switch to list view</a>
     </form>

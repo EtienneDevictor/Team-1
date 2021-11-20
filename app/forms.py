@@ -49,3 +49,4 @@ class uploadNotes(FlaskForm):
 class FlashCardForm(FlaskForm):
     next = SubmitField('Next')
     previous = SubmitField('Previous')
+    flip = SubmitField('flip')
