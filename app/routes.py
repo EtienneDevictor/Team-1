@@ -106,7 +106,7 @@ def view():
                 
 @app_obj.route('/uploadnotes/<int:class_id>', methods = ['GET', 'POST'])
 #@login_required
-def notes():
+def notes(class_id):
     title = 'Notes'
     form = uploadNotes()
     if form.validate_on_submit():
