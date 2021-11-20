@@ -2,7 +2,7 @@ from flask_login.utils import logout_user
 from app import db, app_obj
 import app
 from app.models import User, Class, FlashCard, Cardlist
-from app.forms import LoginForm, SignInForm, createFlashCardForm, uploadNotes, ClassCreator, fTextInFileForm, ListCreator, FlashCardForm
+from app.forms import LoginForm, SignInForm, createFlashCardForm, uploadNotes, ClassCreator, fTextInFileForm, ListCreator, FlashCardForm, QuizForm
 from flask import render_template, escape, flash, redirect, session
 from flask_login import current_user, login_user, login_required, logout_user
 from werkzeug.utils import secure_filename
@@ -101,7 +101,7 @@ def view():
                 
 @app_obj.route('/uploadnotes/<int:class_id>', methods = ['GET', 'POST'])
 #@login_required
-def notes():
+def notes(class_id):
     title = 'Notes'
     form = uploadNotes()
     if form.validate_on_submit():
@@ -186,4 +186,38 @@ def flashlist(list_id):
             return render_template('flashcard.html', form=form, list_id=list_id)
     return render_template('flashcard.html', form=form, card=flashcards[session['active_card']], list_id=list_id)          
     
+@app_obj.route("/quiz/<int:list_id>", methods = ['GET', 'POST'])
+@login_required
+def quiz(list_id):
+    title = 'Quiz'
+    form = QuizForm()
+    end = False
+    questions = {}
+    flashcards = []
+    qNum = 0
+    flashcards.extend(FlashCard.query.filter_by(cardList_id=list_id))
+    qLength = len(flashcards)
+    for flashcard in flashcards:
+        questions[flashcard.title] = flashcard.content
+    form = QuizForm()
+    if form.is_submitted():
+        if qNum == qLength:
+            end = True
+        if form.next.data:
+            qNum = up(qNum, qLength)
+        elif form.previous.data:
+            qNum = down(qNum, qLength)
+    return render_template('quiz.html', title = title, form=form, qNum = qNum, questions = questions, flashcards = flashcards, end = end)
 
+def up(num, length):
+    if num > -1:
+        return num + 1
+    if num == length:
+        return length
+
+def down(num, length):
+    if num < length + 1:
+        return num - 1
+    if num is 0:
+        return 0
+    

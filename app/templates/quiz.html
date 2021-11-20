@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1> {{ title }} </h1>
+        <p>
+            Question {{ qNum }}: {{ questions[qNum] }} 
+        </p>
+        <p>
+            {{flashcards[qNum]}}
+        </p>     
+        <p>
+            {{ form.answer.label }} <br>
+            {{ form.answer(size=32) }}
+        <p>
+            {{ form.previous() }} {{ form.next() }} 
+        </p>   
+        <p>
+            {% if end %}
+                {{ form.submit() }}
+            {% endif %}
+        </p>
+{% endblock %}
+
