@@ -1,8 +1,8 @@
 from flask_login.utils import logout_user
 from app import db, app_obj
 import app
-from app.models import User, Class, FlashCard
-from app.forms import LoginForm, SignInForm, createFlashCardForm, uploadNotes, ClassCreator, fTextInFileForm
+from app.models import User, Class, FlashCard, Cardlist
+from app.forms import LoginForm, SignInForm, createFlashCardForm, uploadNotes, ClassCreator, fTextInFileForm, ListCreator
 from flask import render_template, escape, flash, redirect
 from flask_login import current_user, login_user, login_required, logout_user
 from werkzeug.utils import secure_filename
@@ -99,7 +99,7 @@ def view():
     flashcards = FlashCard.query.all()
     return render_template("viewflashcards.html", title = title, flashcards = flashcards)
                 
-@app_obj.route('/uploadnotes', methods = ['GET', 'POST'])
+@app_obj.route('/uploadnotes/<int:class_id>', methods = ['GET', 'POST'])
 #@login_required
 def notes():
     title = 'Notes'
@@ -138,5 +138,26 @@ def class_selector():
         db.session.add(category)
         db.session.commit()
         return redirect('/ClassList')
-    return render_template('classes.html', form=form, user_classes=user_classes)
+    return render_template('classes.html', 
+                           form=form, 
+                           user_classes=user_classes)
+
+
+@app_obj.route("/ClassContent/<int:class_id>", methods = ['GET', 'POST'])
+@login_required
+def inside_class(class_id):
+    class_cardlists = Cardlist.query.filter_by(class_id=class_id)
+    form = ListCreator()
+    if form.validate_on_submit():
+        cardlist = Cardlist(title=form.title.data, class_id=class_id)
+        db.session.add(cardlist)
+        db.session.commit()
+        flash('List {form.data.title} added to this class')
+        return redirect(f'/ClassContent/{class_id}')
+    class_notes = Cardlist.query.filter_by(class_id=class_id)
+    return render_template('inside_class.html',
+                    class_id = class_id, 
+                    form=form, 
+                    cardlists=class_cardlists,
+                    notes=class_notes)
 

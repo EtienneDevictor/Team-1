@@ -2,10 +2,10 @@
 {% block content %}
     <h1> Pick Which Class Contains The Desired FlashCards</h1>
     <form action ="" method="POST" novalidate>
-        {{form.hidden_tag() }}
-        {% for class in user_classes %}
-            <a href="/ClassList/{{ class.title }}">{{ class.title }}</a>
-        {% endfor %}
+        {{ form.hidden_tag() }}
+        {% for user in user_classes %} 
+            <a href=/ClassContent/{{user.id}}>{{ user.title }}</a>
+         {% endfor %}
         <p>
             {{ form.title.label }} <br>
             {{ form.title() }}

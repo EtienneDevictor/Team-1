@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1> Pick Which Class Contains The Desired FlashCards</h1>
+    <form action ="" method="POST" novalidate>
+        {{form.hidden_tag() }}
+        {% for list in cardlists %}
+            <a href=/flashList/{{list.id}}>{{ list.title }}</a>
+        {% endfor %}
+        <p>
+            {{ form.title.label }} <br>
+            {{ form.title() }}
+        </p>
+        <p>
+            {{ form.submit() }}
+        </p>
+    </form>
+    {% for note in notes %}
+        <a href=note/{{note.id}}>{{ note.title }}</a> <!-- this will be the note viewer-->
+    {% endfor %}
+    <a href=/uploadnotes/{{class_id}}>Upload new Notes</a>
+    
+{% endblock %}
