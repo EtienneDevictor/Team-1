@@ -59,7 +59,7 @@ def login():
         if user is None or not user.check_password(form.password.data):
             flash('Invalid username or password')
             is_active = False
-            return redirect('/login')
+            return redirect('/')
         login_user(user, remember  = form.remember_me.data)
         is_active = True
     return render_template("login.html", title = title, form = form)
@@ -79,17 +79,22 @@ def create(list_id):
     title = "Create Flashcard"
     form = createFlashCardForm()
     if form.validate_on_submit():
-        title = form.title.data
-        content = form.text.data
-        if title is None:
+        if form.create.data:
+            title = form.title.data
+            content = form.text.data
+            if title is None:
                 flash('The FlashCard needs a title')
-        elif content is None:
-            flash('The content has no text')
-        else:
-            flashcard = FlashCard(title=form.title.data, content=form.text.data, cardList_id=list_id)
-            db.session.add(flashcard)
-            db.session.commit()
-            flash(f'Flashcard Created: {flashcard}')
+            elif content is None:
+                flash('The content has no text')
+            else:
+                flashcard = FlashCard(title=form.title.data, content=form.text.data, cardList_id=list_id)
+                db.session.add(flashcard)
+                db.session.commit()
+                form.title.data = ""
+                form.text.data = ""
+                flash(f'Flashcard Created: {flashcard.title}')
+        elif form.back.data:
+            return redirect(f'/flashList/{list_id}')
     return render_template("createflashcard.html", title = title, form = form)
 
 @app_obj.route('/viewflashcard', methods = ['GET', 'POST'])
