@@ -95,14 +95,14 @@ def create(list_id):
                 flash(f'Flashcard Created: {flashcard.title}')
         elif form.back.data:
             return redirect(f'/flashList/{list_id}')
-    return render_template("createflashcard.html", title = title, form = form)
+    return render_template("createflashcard.html", title = title, form = form, list_id=list_id)
 
-@app_obj.route('/viewflashcard', methods = ['GET', 'POST'])
+@app_obj.route('/viewflashcard/<int:list_id>', methods = ['GET', 'POST'])
 @login_required
-def view(): 
+def view(list_id): 
     title = "View Flashcards"
-    flashcards = FlashCard.query.all()
-    return render_template("viewflashcards.html", title = title, flashcards = flashcards)
+    flashcards = FlashCard.query.filter_by(cardList_id=list_id)
+    return render_template("viewflashcards.html", title = title, flashcards = flashcards, list_id=list_id)
                 
 @app_obj.route('/uploadnotes/<int:class_id>', methods = ['GET', 'POST'])
 #@login_required
