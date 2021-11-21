@@ -180,8 +180,7 @@ def inside_class(class_id):
         flash('List {form.data.title} added to this class')
         return redirect(f'/ClassContent/{class_id}')
     class_notes = Cardlist.query.filter_by(class_id=class_id)
-    session['active_card'] = 1
-    session['front'] = True
+    session['active_card'] = 0
     return render_template('inside_class.html',
                     class_id = class_id, 
                     form=form, 

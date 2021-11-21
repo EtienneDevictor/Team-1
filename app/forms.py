@@ -22,11 +22,11 @@ class LoginForm(FlaskForm):
 
 
 class ClassCreator(FlaskForm):
-    title = StringField('Enter new Class Name')
+    title = StringField('Enter new Class Name', validators=[DataRequired()])
     submit = SubmitField('Create new Class')
     
 class ListCreator(FlaskForm):
-     title = StringField('Enter New FlashCard List Name')
+     title = StringField('Enter New FlashCard List Name', validators=[DataRequired()])
      submit = SubmitField('Create new FlashCard List')
  
 class createFlashCardForm(FlaskForm):
