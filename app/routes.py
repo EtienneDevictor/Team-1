@@ -181,6 +181,7 @@ def inside_class(class_id):
         return redirect(f'/ClassContent/{class_id}')
     class_notes = Cardlist.query.filter_by(class_id=class_id)
     session['active_card'] = 0
+    session['front'] = True
     return render_template('inside_class.html',
                     class_id = class_id, 
                     form=form, 
