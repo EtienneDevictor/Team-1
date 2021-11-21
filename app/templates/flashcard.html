@@ -1,12 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
 {% if card %}
-    {% if front %}
-        <h2> {{ card.title }} </h2>
-    {% else %}
-        <!--we can add the image here afterwards-->
-        <p> {{ card.content }} </p>
-    {% endif %}
+    <div style="width:100px;height:75px">
+        {% if front %}
+            <h2> {{ card.title }} </h2>
+        {% else %}
+            <!--we can add the image here afterwards-->
+            <p> {{ card.content }} </p>
+        {% endif %}
+    </div>
     <form action="" method="Post" novalidate>
         <p>
             {{ form.previous() }}    {{ form.flip }}    {{ form.next() }}
