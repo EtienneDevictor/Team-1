@@ -75,7 +75,9 @@ def find():
         flashlists = []
         for category in user_classes:
             flashlists.extend(Cardlist.query.filter_by(class_id=category.id))
-        flashcards = FlashCard.query.filter(FlashCard.content.contains(form.text.data), FlashCard.list_id)
+        flashcards = []
+        for flashlist in flashlists:
+            flashcards.extend(FlashCard.query.filter(FlashCard.content.contains(form.text.data), FlashCard.cardList_id==flashlist.id))
         
         return render_template("viewflashcards.html", title = title, flashcards = flashcards)
     return render_template("find.html", title = title, form = form)
