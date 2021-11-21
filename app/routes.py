@@ -1,4 +1,5 @@
 from flask.helpers import url_for
+from flask.templating import render_template_string
 from flask_login.utils import logout_user
 from app import db, app_obj
 import app
@@ -75,7 +76,9 @@ def find():
         flashlists = []
         for category in user_classes:
             flashlists.extend(Cardlist.query.filter_by(class_id=category.id))
-        flashcards = FlashCard.query.filter(FlashCard.content.contains(form.text.data), FlashCard.list_id)
+        flashcards = []
+        for flashlist in flashlists:
+            flashcards.extend(FlashCard.query.filter(FlashCard.content.contains(form.text.data), FlashCard.cardList_id==flashlist.id))
         
         return render_template("viewflashcards.html", title = title, flashcards = flashcards)
     return render_template("find.html", title = title, form = form)
@@ -113,12 +116,13 @@ def view(list_id):
 @app_obj.route('/uploadnotes/<int:class_id>', methods = ['GET', 'POST'])
 #@login_required
 def notes(class_id):
-    title = 'Notes'
+    title = 'Upload Notes'
     form = uploadNotes()
     if form.validate_on_submit():
         name = form.title.data
         file = form.notes.data
-        notes = Notes(class_id = class_id, title = name, mdFilePath = file.save(os.path.join(app_obj.config['UPLOAD_FOLDER'], name)))
+        notes = Notes(class_id = class_id, title = name, mdFilePath = '/app/mdFiles/' + name)
+        file.save(os.path.join(app_obj.config['UPLOAD_FOLDER'], name))
         db.session.add(notes)
         db.session.commit()
         flash(f'Notes: {name} Saved')
@@ -127,6 +131,21 @@ def notes(class_id):
         flash('Please enter a md file')
     return render_template('uploadnotes.html', title = title, form = form)
 
+@app_obj.route('/viewnotes/<int:class_id>', methods = ['GET', 'POST'])
+#login_required
+def viewntoes(class_id):
+    title = 'Notes'
+    names = Notes.query.all()
+    path = '/app/mdFiles/'
+    return render_template('viewnotes.html', title = title, names = names, path = path)
+    
+@app_obj.route('/app/mdFiles/<name>', methods = ['GET', 'POST'])
+def opener(name):
+    with open('./app/mdFiles/' + name) as f:
+        text = f.read()
+        html = markdown.markdown(text)
+    return render_template_string(html)
+   
 @app_obj.route("/logout")
 @login_required
 def logout():
@@ -218,8 +237,10 @@ def quiz(list_id):
             end = True
         if form.next.data:
             qNum = up(qNum, qLength)
+            return render_template('quiz.html', title = title, form=form, qNum = qNum, questions = questions, flashcards = flashcards, end = end)
         elif form.previous.data:
             qNum = down(qNum, qLength)
+            return render_template('quiz.html', title = title, form=form, qNum = qNum, questions = questions, flashcards = flashcards, end = end)
     return render_template('quiz.html', title = title, form=form, qNum = qNum, questions = questions, flashcards = flashcards, end = end)
 
 def up(num, length):

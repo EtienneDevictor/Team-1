@@ -7,6 +7,8 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 app_obj = Flask(__name__)
 UPLOAD_FOLDER = basedir + '/mdFiles'
+if not os.path.isdir(UPLOAD_FOLDER):
+    os.mkdir(UPLOAD_FOLDER)
 
 app_obj.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app_obj.config.from_mapping(
