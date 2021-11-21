@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+    <form action = "" method = "POST" novalidate>
     <h1> {{ title }} </h1>
         <p>
             Question {{ qNum }}: {{ questions[qNum] }} 
@@ -18,5 +19,6 @@
                 {{ form.submit() }}
             {% endif %}
         </p>
+    </form>
 {% endblock %}
 

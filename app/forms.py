@@ -52,7 +52,7 @@ class FlashCardForm(FlaskForm):
     flip = SubmitField('Flip')
     
 class QuizForm(FlaskForm):
-    answer = StringField('Answer')
+    answer = StringField('Answer', validators = [DataRequired()])
     next = SubmitField('Next')
     previous = SubmitField('Previous')
     submit = SubmitField('Submit')

@@ -180,6 +180,8 @@ def inside_class(class_id):
         flash('List {form.data.title} added to this class')
         return redirect(f'/ClassContent/{class_id}')
     class_notes = Cardlist.query.filter_by(class_id=class_id)
+    session['active_card'] = 1
+    session['front'] = True
     return render_template('inside_class.html',
                     class_id = class_id, 
                     form=form, 
@@ -193,7 +195,7 @@ def flashlist(list_id):
     flashcards.extend(FlashCard.query.filter_by(cardList_id=list_id))
     form = FlashCardForm()
     
-    if form.validate_on_submit:
+    if form.validate_on_submit():
         if form.next.data:
             session['front'] = True
             if session['active_card'] == len(flashcards) - 1:
@@ -215,43 +217,45 @@ def flashlist(list_id):
                 session['front'] = True
     
     if len(flashcards) == 0:
-            return render_template('flashcard.html', form=form, list_id=list_id)
+        return render_template('flashcard.html', form=form, list_id=list_id)
     return render_template('flashcard.html', form=form, card=flashcards[session['active_card']], front=session['front'], list_id=list_id)          
     
-@app_obj.route("/quiz/<int:list_id>", methods = ['GET', 'POST'])
+@app_obj.route("/quiz/<int:list_id>/<int:question_num>", methods = ['GET', 'POST'])
 @login_required
-def quiz(list_id):
+def quiz(list_id,question_num):
     title = 'Quiz'
     form = QuizForm()
-    end = False
     questions = {}
     flashcards = []
-    qNum = 0
+    end = False
     flashcards.extend(FlashCard.query.filter_by(cardList_id=list_id))
     qLength = len(flashcards)
     for flashcard in flashcards:
         questions[flashcard.title] = flashcard.content
     form = QuizForm()
     if form.is_submitted():
-        if qNum == qLength:
+        if question_num == qLength - 1: #before the last question
             end = True
-        if form.next.data:
-            qNum = up(qNum, qLength)
-            return render_template('quiz.html', title = title, form=form, qNum = qNum, questions = questions, flashcards = flashcards, end = end)
+        elif form.next.data:
+            question_num = up(question_num, qLength)
+            return redirect(f'/quiz/{list_id}/{question_num}')
         elif form.previous.data:
-            qNum = down(qNum, qLength)
-            return render_template('quiz.html', title = title, form=form, qNum = qNum, questions = questions, flashcards = flashcards, end = end)
-    return render_template('quiz.html', title = title, form=form, qNum = qNum, questions = questions, flashcards = flashcards, end = end)
+            question_num = down(question_num, qLength) 
+            return redirect(f'/quiz/{list_id}/{question_num}')
+    if form.validate_on_submit():
+        return redirect('/')
+    return render_template('quiz.html', title=title, form=form, qNum=question_num, questions=questions, flashcards=flashcards, end=end)
+
 
 def up(num, length):
-    if num > -1:
-        return num + 1
     if num == length:
         return length
+    if num > -1:
+        return num + 1
 
 def down(num, length):
-    if num < length + 1:
-        return num - 1
     if num is 0:
         return 0
+    if num < length + 1:
+        return num - 1
     
