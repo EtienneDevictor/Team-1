@@ -4,7 +4,7 @@ from flask_login.utils import logout_user
 from app import db, app_obj
 import app
 from app.models import *
-from app.forms import LoginForm, SignInForm, createFlashCardForm, uploadNotes, ClassCreator, fTextInFileForm, ListCreator, FlashCardForm
+from app.forms import ShareClassForm, LoginForm, SignInForm, createFlashCardForm, uploadNotes, ClassCreator, fTextInFileForm, ListCreator, FlashCardForm
 from flask import render_template, escape, flash, redirect, session
 from flask_login import current_user, login_user, login_required, logout_user
 from werkzeug.utils import secure_filename
@@ -156,11 +156,12 @@ def logout():
 @app_obj.route("/ClassList", methods = ['GET', 'POST'])
 @login_required
 def class_selector():
-    user_classes = Class.query.filter_by(user_id=current_user.id)
+    user_classes = current_user.classes
     form = ClassCreator()
     if form.validate_on_submit():
-        category = Class(title=form.title.data, user_id=current_user.id)
+        category = Class(title=form.title.data)
         db.session.add(category)
+        category.users.append(current_user)
         db.session.commit()
         return redirect('/ClassList')
     return render_template('classes.html', 
@@ -218,6 +219,7 @@ def flashlist(list_id):
     
     if len(flashcards) == 0:
             return render_template('flashcard.html', form=form, list_id=list_id)
-    return render_template('flashcard.html', form=form, card=flashcards[session['active_card']], front=session['front'], list_id=list_id)          
-    
+    return render_template('flashcard.html', form=form, card=flashcards[session['active_card']], front=session['front'], list_id=list_id)
 
+        
+    

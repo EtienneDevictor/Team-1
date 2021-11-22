@@ -50,3 +50,7 @@ class FlashCardForm(FlaskForm):
     next = SubmitField('Next')
     previous = SubmitField('Previous')
     flip = SubmitField('flip')
+    
+class ShareClassForm(FlaskForm):
+    username = StringField('Enter the name of the user you wish to share this list with', validators = [DataRequired()])
+    share = SubmitField('Share')   
