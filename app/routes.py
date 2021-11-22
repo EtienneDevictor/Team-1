@@ -221,5 +221,20 @@ def flashlist(list_id):
             return render_template('flashcard.html', form=form, list_id=list_id)
     return render_template('flashcard.html', form=form, card=flashcards[session['active_card']], front=session['front'], list_id=list_id)
 
-        
+@app_obj.route("/ShareClass/<int:class_id>", methods = ['POST', 'GET'])
+@login_required
+def share_class(class_id):
+    form = ShareClassForm()
+    
+    if form.validate_on_submit:
+        user = User.query.filter_by(username=form.username.data).first()
+        category = Class.query.filter_by(id=class_id).first()
+        if user:
+            category.users.append(user)
+            db.session.commit()
+            flash(f'{category.title} shared with {user.username}')
+        else:
+            flash(f'{form.username.data} does not exist')
+            
+    return render_template('shareclass.html', form=form, class_id=class_id)       
     

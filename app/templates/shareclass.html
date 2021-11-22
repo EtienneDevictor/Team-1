@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %} 
+    <h2> Share Class </h2>
+    <form action="" method="POST" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.username.label }} <br>
+            {{ form.username()}}
+        </p>
+        <p>
+            {{ form.share() }}
+        </p>
+    </form>
+    <a href=/ClassContent/{{class_id}}>Return to Class</a>
+{% endblock %} 
