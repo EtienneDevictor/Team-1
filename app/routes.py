@@ -72,7 +72,7 @@ def find():
     form = fTextInFileForm()
     if form.validate_on_submit(): 
         flash(f'Loading flashcards with {form.text.data}')
-        user_classes = Class.query.filter_by(user_id = current_user.id)
+        user_classes = current_user.classes
         flashlists = []
         for category in user_classes:
             flashlists.extend(Cardlist.query.filter_by(class_id=category.id))
