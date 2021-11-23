@@ -73,7 +73,7 @@ def find():
     form = fTextInFileForm()
     if form.validate_on_submit(): 
         flash(f'Loading flashcards with {form.text.data}')
-        user_classes = Class.query.filter_by(user_id = current_user.id)
+        user_classes = current_user.classes
         flashlists = []
         for category in user_classes:
             flashlists.extend(Cardlist.query.filter_by(class_id=category.id))
@@ -158,11 +158,12 @@ def logout():
 @app_obj.route("/ClassList", methods = ['GET', 'POST'])
 @login_required
 def class_selector():
-    user_classes = Class.query.filter_by(user_id=current_user.id)
+    user_classes = current_user.classes
     form = ClassCreator()
     if form.validate_on_submit():
-        category = Class(title=form.title.data, user_id=current_user.id)
+        category = Class(title=form.title.data)
         db.session.add(category)
+        category.users.append(current_user)
         db.session.commit()
         return redirect('/ClassList')
     return render_template('classes.html', 
@@ -269,3 +270,21 @@ def down(num, length):
         return num - 1
     
 answersheet = {}
+
+@app_obj.route("/ShareClass/<int:class_id>", methods = ['POST', 'GET'])
+@login_required
+def share_class(class_id):
+    form = ShareClassForm()
+    
+    if form.validate_on_submit:
+        user = User.query.filter_by(username=form.username.data).first()
+        category = Class.query.filter_by(id=class_id).first()
+        if user:
+            category.users.append(user)
+            db.session.commit()
+            flash(f'{category.title} shared with {user.username}')
+        else:
+            flash(f'{form.username.data} does not exist')
+            
+    return render_template('shareclass.html', form=form, class_id=class_id)       
+    

@@ -49,6 +49,7 @@ class uploadNotes(FlaskForm):
 class FlashCardForm(FlaskForm):
     next = SubmitField('Next')
     previous = SubmitField('Previous')
+
     flip = SubmitField('Flip')
     
 class QuizForm(FlaskForm):
@@ -56,3 +57,7 @@ class QuizForm(FlaskForm):
     next = SubmitField('Next')
     previous = SubmitField('Previous')
     submit = SubmitField('Submit')
+    
+class ShareClassForm(FlaskForm):
+    username = StringField('Enter the name of the user you wish to share this list with', validators = [DataRequired()])
+    share = SubmitField('Share')   
