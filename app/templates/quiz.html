@@ -1,24 +1,33 @@
 {% extends 'base.html' %}
 {% block content %}
-    <form action = "" method = "POST" novalidate>
+    <form action ="" method = "POST" novalidate>
     <h1> {{ title }} </h1>
         <p>
-            Question {{ qNum }}: {{ questions[qNum] }} 
+            Question {{ qNum + 1 }} of {{ qLength }}: {{ questions[flashcards[qNum].title] }} 
         </p>
         <p>
-            {{flashcards[qNum]}}
-        </p>     
+            <input list ="answers" 
+            {% if answersheet[qNum] %}    
+                placeholder={{answersheet[qNum]}}
+            {% endif %}
+            name="answer" autocomplete="off">
+            <datalist id ="answers">
+                {% for flashcard in flashcards %}
+                    <option value = {{ flashcard }}>
+                {% endfor %}  
+            </datalist>
         <p>
-            {{ form.answer.label }} <br>
-            {{ form.answer(size=32) }}
+            {% if qNum|int() > 0 %}
+                {{ form.previous() }} 
+            {% endif %}
+            {% if qNum|int() < qLength-1|int() %} 
+                {{ form.next() }} 
+            {% endif %}
+        </p>
         <p>
-            {{ form.previous() }} {{ form.next() }} 
-        </p>   
-        <p>
-            {% if end %}
+            {% if qNum|int()  == qLength-1|int() %}
                 {{ form.submit() }}
             {% endif %}
         </p>
-    </form>
 {% endblock %}
 
