@@ -1,17 +1,47 @@
-# Welcome to MkDocs
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+# Welcome to Study App
 
-## Commands
+Desciption of the app 
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+## Installation 
 
-## Project layout
+how to install the app just he clone directory thing for git 
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+## Project Layout
+
+### run.py 
+
+This file simply runs the application
+
+### app
+
+###### __init__.py
+
+		descrition of what in the init file 
+
+###### forms.py
+
+		description of what in the form file 
+
+		links to pages on each class in this file 
+###### models.py
+[Class Users()](/model/#class-user) <br>
+[Class Class()](/model/#class-class) <br>
+[Class Notes()](/model/#class-notes) <br>
+[Class Cardlist()](/model/#class-cardlist) <br>
+[Class FlashCard()](/model/#class-flashcard) <br>
+
+###### routes.py
+
+		desciprtion 
+
+		links to functions
+
+###### mdFiles
+
+		description of what kind of files are contained 
+
+###### templates
+
+		description of what kind of ifles are contained
+	

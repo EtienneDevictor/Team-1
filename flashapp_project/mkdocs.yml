@@ -1,7 +1,11 @@
-site_name: MKLorum
+site_name: Study App 
 site_url: http://example.com/
 nav:
     - Home: index.md
-    - About: about.md
-    
+    - DataBase: model.md
+    - FormFields: forms.md
+    - Routes: routes.md
+
+theme: readthedocs
+
 
