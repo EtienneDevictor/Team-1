@@ -1,4 +1,4 @@
-from flask.helpers import url_for
+from flask.helpers import send_from_directory, url_for
 from flask.templating import render_template_string
 from flask_login.utils import logout_user
 from app import db, app_obj
@@ -8,6 +8,7 @@ from app.forms import *
 from flask import render_template, escape, flash, redirect, session, request
 from flask_login import current_user, login_user, login_required, logout_user
 from werkzeug.utils import secure_filename
+from xhtml2pdf import pisa
 import markdown
 import os
 
@@ -123,7 +124,7 @@ def notes(class_id):
     if form.validate_on_submit():
         name = form.title.data
         file = form.notes.data
-        notes = Notes(class_id = class_id, title = name, mdFilePath = '/app/mdFiles/' + name)
+        notes = Notes(class_id = class_id, title = name)
         file.save(os.path.join(app_obj.config['UPLOAD_FOLDER'], name))
         db.session.add(notes)
         db.session.commit()
@@ -132,6 +133,7 @@ def notes(class_id):
     if form.is_submitted():
         flash('Please enter a md file')
     return render_template('uploadnotes.html', title = title, form = form)
+
 
 @app_obj.route('/viewnotes/<int:class_id>', methods = ['GET', 'POST'])
 #login_required
@@ -147,7 +149,26 @@ def opener(name):
         text = f.read()
         html = markdown.markdown(text)
     return render_template_string(html)
-   
+    #Have this extend the base html
+
+@app_obj.route('/app/mdFiles/<name>/convert', methods = ['GET', 'POST'])
+def converter(name):
+    with open('./app/mdFiles/' + name) as f:
+        title = 'Converted'
+        file_name = f'{name}.pdf'
+        text = f.read()
+        html = markdown.markdown(text)
+        file_path = f'./app/pdfFiles/{name}.pdf'
+        output = open(file_path, "w+b")
+        pisa_status = pisa.CreatePDF(html, dest = output)
+        output.close()
+        return render_template('converted.html', title = title, file_name = file_name)
+
+@app_obj.route('/app/pdfFiles/<name>', methods = ['GET', 'POST'])
+def download(name):
+    return send_from_directory(directory=os.path.join(app_obj.root_path,'pdfFiles'), path=name)
+        
+
 @app_obj.route("/logout")
 @login_required
 def logout():

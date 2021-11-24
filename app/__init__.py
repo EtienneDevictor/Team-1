@@ -10,6 +10,10 @@ UPLOAD_FOLDER = basedir + '/mdFiles'
 if not os.path.isdir(UPLOAD_FOLDER):
     os.mkdir(UPLOAD_FOLDER)
 
+PDF_FOLDER = basedir + '/pdfFiles'
+if not os.path.isdir(PDF_FOLDER):
+    os.mkdir(PDF_FOLDER)
+    
 app_obj.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app_obj.config.from_mapping(
 	SECRET_KEY = 'who cares',

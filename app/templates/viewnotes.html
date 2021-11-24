@@ -3,7 +3,7 @@
 <h1> {{ title }} </h1>
 <ul>
 {% for titles in names %}
-    <li> <a href ='/app/mdFiles/{{titles}}'> {{ titles }} </a></li>
+    <li> <a href ='/app/mdFiles/{{titles}}'> {{ titles }} </a> <a href ='/app/mdFiles/{{titles}}/convert'>  Convert To PDF</li>
 </ul>
 {% endfor %}
 {% endblock %}
