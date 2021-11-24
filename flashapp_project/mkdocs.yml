@@ -1,0 +1,7 @@
+site_name: MKLorum
+site_url: http://example.com/
+nav:
+    - Home: index.md
+    - About: about.md
+    
+

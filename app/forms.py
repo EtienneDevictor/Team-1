@@ -22,11 +22,11 @@ class LoginForm(FlaskForm):
 
 
 class ClassCreator(FlaskForm):
-    title = StringField('Enter new Class Name')
+    title = StringField('Enter new Class Name', validators=[DataRequired()])
     submit = SubmitField('Create new Class')
     
 class ListCreator(FlaskForm):
-     title = StringField('Enter New FlashCard List Name')
+     title = StringField('Enter New FlashCard List Name', validators=[DataRequired()])
      submit = SubmitField('Create new FlashCard List')
  
 class createFlashCardForm(FlaskForm):
@@ -49,4 +49,15 @@ class uploadNotes(FlaskForm):
 class FlashCardForm(FlaskForm):
     next = SubmitField('Next')
     previous = SubmitField('Previous')
-    flip = SubmitField('flip')
+
+    flip = SubmitField('Flip')
+    
+class QuizForm(FlaskForm):
+    answer = StringField('Answer', validators = [DataRequired()])
+    next = SubmitField('Next')
+    previous = SubmitField('Previous')
+    submit = SubmitField('Submit')
+    
+class ShareClassForm(FlaskForm):
+    username = StringField('Enter the name of the user you wish to share this list with', validators = [DataRequired()])
+    share = SubmitField('Share')   

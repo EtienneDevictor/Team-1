@@ -10,6 +10,8 @@
         </ul>
         {% endif %}
         </p>
-    <a href=/flashList/{{list_id}}>Back to Flashcard View</a>
+    {% if list_id %}
+        <a href=/flashList/{{list_id}}>Back to Flashcard View</a>
+    {% endif %}
 {% endblock %}
 

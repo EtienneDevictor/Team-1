@@ -4,8 +4,8 @@ from flask_login.utils import logout_user
 from app import db, app_obj
 import app
 from app.models import *
-from app.forms import LoginForm, SignInForm, createFlashCardForm, uploadNotes, ClassCreator, fTextInFileForm, ListCreator, FlashCardForm
-from flask import render_template, escape, flash, redirect, session
+from app.forms import *
+from flask import render_template, escape, flash, redirect, session, request
 from flask_login import current_user, login_user, login_required, logout_user
 from werkzeug.utils import secure_filename
 from xhtml2pdf import pisa
@@ -68,21 +68,25 @@ def login():
     return render_template("login.html", title = title, form = form)
 
 @app_obj.route('/find', methods = ['GET', 'POST'])
+@login_required
 def find(): 
     title = 'Find Flashcard'
     form = fTextInFileForm()
     if form.validate_on_submit(): 
         flash(f'Loading flashcards with {form.text.data}')
-        user_classes = Class.query.filter_by(user_id = current_user.id)
+        user_classes = current_user.classes
         flashlists = []
         for category in user_classes:
             flashlists.extend(Cardlist.query.filter_by(class_id=category.id))
-        flashcards = FlashCard.query.filter(FlashCard.content.contains(form.text.data), FlashCard.list_id)
+        flashcards = []
+        for flashlist in flashlists:
+            flashcards.extend(FlashCard.query.filter(FlashCard.content.contains(form.text.data), FlashCard.cardList_id==flashlist.id))
         
         return render_template("viewflashcards.html", title = title, flashcards = flashcards)
     return render_template("find.html", title = title, form = form)
 
 @app_obj.route('/createflashcard/<int:list_id>', methods = ['GET', 'POST'])
+@login_required
 def create(list_id):
     title = "Create Flashcard"
     form = createFlashCardForm()
@@ -175,11 +179,12 @@ def logout():
 @app_obj.route("/ClassList", methods = ['GET', 'POST'])
 @login_required
 def class_selector():
-    user_classes = Class.query.filter_by(user_id=current_user.id)
+    user_classes = current_user.classes
     form = ClassCreator()
     if form.validate_on_submit():
-        category = Class(title=form.title.data, user_id=current_user.id)
+        category = Class(title=form.title.data)
         db.session.add(category)
+        category.users.append(current_user)
         db.session.commit()
         return redirect('/ClassList')
     return render_template('classes.html', 
@@ -199,6 +204,8 @@ def inside_class(class_id):
         flash('List {form.data.title} added to this class')
         return redirect(f'/ClassContent/{class_id}')
     class_notes = Cardlist.query.filter_by(class_id=class_id)
+    session['active_card'] = 0
+    session['front'] = True
     return render_template('inside_class.html',
                     class_id = class_id, 
                     form=form, 
@@ -212,7 +219,7 @@ def flashlist(list_id):
     flashcards.extend(FlashCard.query.filter_by(cardList_id=list_id))
     form = FlashCardForm()
     
-    if form.validate_on_submit:
+    if form.validate_on_submit():
         if form.next.data:
             session['front'] = True
             if session['active_card'] == len(flashcards) - 1:
@@ -234,7 +241,71 @@ def flashlist(list_id):
                 session['front'] = True
     
     if len(flashcards) == 0:
-            return render_template('flashcard.html', form=form, list_id=list_id)
+        return render_template('flashcard.html', form=form, list_id=list_id)
     return render_template('flashcard.html', form=form, card=flashcards[session['active_card']], front=session['front'], list_id=list_id)          
     
+@app_obj.route("/quiz/<int:list_id>/<int:question_num>", methods = ['GET', 'POST'])
+@login_required
+def quiz(list_id,question_num):
+    title = 'Quiz'
+    form = QuizForm()
+    global answersheet
+    questions = {}
+    flashcards = []
+    flashcards.extend(FlashCard.query.filter_by(cardList_id=list_id))
+    qLength = len(flashcards)
+    for flashcard in flashcards:
+        questions[flashcard.title] = flashcard.content
+    form = QuizForm()
 
+    if form.is_submitted():
+        if request.form['answer']:  
+            answer = request.form['answer']
+            answersheet[question_num]=answer
+        if form.submit.data:
+            flash('submitted')
+            counter = 0
+            for x in range (0,qLength):
+                if answersheet[x] == flashcards[x].title:
+                    counter += 1
+            flash(f'{counter} correct out of {qLength}')
+            return redirect(f'/quiz/{list_id}/{question_num}')
+        if form.next.data:
+            question_num = up(question_num, qLength)
+        elif form.previous.data:
+            question_num = down(question_num, qLength)
+        return redirect(f'/quiz/{list_id}/{question_num}')
+    return render_template('quiz.html', list_id=list_id, title=title, form=form, qNum=question_num, questions=questions, flashcards=flashcards, qLength=qLength, answersheet=answersheet)
+
+
+def up(num, length):
+    if num == length:
+        return length
+    if num > -1:
+        return num + 1
+
+def down(num, length):
+    if num == 0:
+        return 0
+    if num < length + 1:
+        return num - 1
+    
+answersheet = {}
+
+@app_obj.route("/ShareClass/<int:class_id>", methods = ['POST', 'GET'])
+@login_required
+def share_class(class_id):
+    form = ShareClassForm()
+    
+    if form.validate_on_submit:
+        user = User.query.filter_by(username=form.username.data).first()
+        category = Class.query.filter_by(id=class_id).first()
+        if user:
+            category.users.append(user)
+            db.session.commit()
+            flash(f'{category.title} shared with {user.username}')
+        else:
+            flash(f'{form.username.data} does not exist')
+            
+    return render_template('shareclass.html', form=form, class_id=class_id)       
+    

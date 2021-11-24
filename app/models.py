@@ -3,12 +3,17 @@ from app import login
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import UserMixin
 
+classes = db.Table('classes',
+                   db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+                   db.Column('class_id', db.Integer, db.ForeignKey('class.id'))
+)
+
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(128), index=True, unique=True)
     password_hash = db.Column(db.String(128))
-    classes = db.relationship('Class', backref='author', lazy='dynamic')
+    classes = db.relationship('Class', secondary=classes, backref=db.backref('users'), lazy='dynamic')
 
     def __repr__(self):
         return f'{ self.username }'
@@ -21,7 +26,6 @@ class User(UserMixin, db.Model):
         
 class Class(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     title = db.Column(db.String(128), index=True)
     cardlist = db.relationship('Cardlist', backref='author', lazy='dynamic')
     notes = db.relationship('Notes', backref='author', lazy='dynamic')
