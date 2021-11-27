@@ -1,12 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
+{{ photo }}
 {% if card %}
     <div style="width:100px;height:75px">
         {% if front %}
             <h2> {{ card.title }} </h2>
         {% else %}
             <!--we can add the image here afterwards-->
-            <p><img src="{{ image }}" alt = "test" style ='width:50px;height:50px'></img></p>  
+            {% if has_photo %}
+            <img src={{ url_for('static', filename = 'images/'+photo) }} alt = "test" style ='width:50px;height:50px'>  
+            {% endif %}
             <p> {{ card.content }} </p>
         {% endif %}
     </div>

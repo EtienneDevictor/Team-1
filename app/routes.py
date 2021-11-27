@@ -221,7 +221,9 @@ def flashlist(list_id):
     flashcards = []
     flashcards.extend(FlashCard.query.filter_by(cardList_id=list_id))
     form = FlashCardForm()
-    image = os.path.join(app_obj.config['IMAGES_FOLDER'], 'asd.jpg')
+    photo = flashcards[session['active_card']].title+'.jpg'
+    image = os.path.join(app_obj.config['IMAGES_FOLDER'], photo)
+    has_photo = os.path.exists(image)
     
     if form.validate_on_submit():
         if form.next.data:
@@ -246,7 +248,7 @@ def flashlist(list_id):
     
     if len(flashcards) == 0:
         return render_template('flashcard.html', form=form, list_id=list_id)
-    return render_template('flashcard.html', form=form, card=flashcards[2], front=False, list_id=list_id, image = image)          
+    return render_template('flashcard.html', form=form, card=flashcards[session['active_card']], front=False, list_id=list_id, image = image, photo = photo, has_photo = has_photo)          
     
 @app_obj.route("/quiz/<int:list_id>/<int:question_num>", methods = ['GET', 'POST'])
 @login_required
