@@ -215,41 +215,48 @@ def inside_class(class_id):
                     cardlists=class_cardlists,
                     notes=class_notes)
 
-@app_obj.route("/flashList/<int:list_id>", methods = ['Get', 'Post'])
+@app_obj.route("/flashList/<int:list_id>/<int:card_id>", methods = ['Get', 'Post'])
 @login_required
-def flashlist(list_id):
+def flashlist(list_id, card_id):
     flashcards = []
     flashcards.extend(FlashCard.query.filter_by(cardList_id=list_id))
     form = FlashCardForm()
-    photo = flashcards[session['active_card']].title+'.jpg'
-    image = os.path.join(app_obj.config['IMAGES_FOLDER'], photo)
-    has_photo = os.path.exists(image)
+    listLength = len(flashcards)
+    global front
+    if listLength > 0:
+        photo = flashcards[card_id].title+'.jpg'
+        image = os.path.join(app_obj.config['IMAGES_FOLDER'], photo)
+        has_photo = os.path.exists(image)
     
-    if form.validate_on_submit():
+    if form.is_submitted():
         if form.next.data:
-            session['front'] = True
-            if session['active_card'] == len(flashcards) - 1:
-                session['active_card'] = 0
+            front = True
+            if card_id == listLength - 1:
+                card_id = 0
                 flash('going to the beginning of the list')
             else:
-                session['active_card'] += 1
+                card_id += 1
+            return redirect(f'/flashList/{list_id}/{card_id}')
         elif form.previous.data:
-            session['front'] = True
-            if session['active_card'] == 0:
-                session['active_card'] = len(flashcards) - 1
+            front = True
+            if card_id == 0:
+                card_id = listLength - 1
                 flash('going to the end of the list')
             else:
-                session['active_card'] -= 1
+                card_id -= 1
+            return redirect(f'/flashList/{list_id}/{card_id}')
         elif form.flip.data:
-            if session['front']:
-                session['front'] = False
-            else:
-                session['front'] = True
-    
+            if front == True:
+                front = False
+            else:   
+                front = True
+            return redirect(f'/flashList/{list_id}/{card_id}')
     if len(flashcards) == 0:
         return render_template('flashcard.html', form=form, list_id=list_id)
-    return render_template('flashcard.html', form=form, card=flashcards[session['active_card']], front=False, list_id=list_id, image = image, photo = photo, has_photo = has_photo)          
-    
+    return render_template('flashcard.html', form=form, listLength=listLength, flashcards=flashcards, card_id=card_id, front=front, list_id=list_id, image = image, photo = photo, has_photo = has_photo)              
+
+front = True
+
 @app_obj.route("/quiz/<int:list_id>/<int:question_num>", methods = ['GET', 'POST'])
 @login_required
 def quiz(list_id,question_num):
@@ -275,14 +282,13 @@ def quiz(list_id,question_num):
                 if answersheet[x] == flashcards[x].title:
                     counter += 1
             flash(f'{counter} correct out of {qLength}')
-            return redirect(f'/quiz/{list_id}/{question_num}')
+            return redirect(f'/quizanswers/{list_id}')
         if form.next.data:
             question_num = up(question_num, qLength)
         elif form.previous.data:
             question_num = down(question_num, qLength)
         return redirect(f'/quiz/{list_id}/{question_num}')
     return render_template('quiz.html', list_id=list_id, title=title, form=form, qNum=question_num, questions=questions, flashcards=flashcards, qLength=qLength, answersheet=answersheet)
-
 
 def up(num, length):
     if num == length:
@@ -315,3 +321,16 @@ def share_class(class_id):
             
     return render_template('shareclass.html', form=form, class_id=class_id)       
     
+
+@app_obj.route('/quizanswers/<int:list_id>', methods = ['POST', 'GET'])
+@login_required
+def show_answers(list_id):
+    title = 'Review Quiz'
+    global answersheet
+    questions = {}
+    flashcards = []
+    flashcards.extend(FlashCard.query.filter_by(cardList_id=list_id))
+    qLength = len(flashcards)
+    for flashcard in flashcards:
+        questions[flashcard.title] = flashcard.content
+    return render_template('quizanswers.html', flashcards=flashcards, qLength=qLength, questions=questions, answersheet=answersheet, title=title, list_id=list_id)

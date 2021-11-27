@@ -18,7 +18,11 @@
             </datalist>
         <p>
             {% if qNum|int() > 0 %}
-                {{ form.previous() }} 
+                {{ form.previous() }}
+            {% else %}
+                <!-- empty space -->
+                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 
             {% endif %}
             {% if qNum|int() < qLength-1|int() %} 
                 {{ form.next() }} 

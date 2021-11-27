@@ -1,27 +1,34 @@
 {% extends "base.html" %}
 {% block content %}
-{{ photo }}
-{% if card %}
-    <div style="width:100px;height:75px">
+{% if flashcards %}
+    <div style="width:200px;height:150px">
         {% if front %}
-            <h2> {{ card.title }} </h2>
+            <h2> {{ flashcards[card_id].title }} </h2> <br>
         {% else %}
-            <!--we can add the image here afterwards-->
             {% if has_photo %}
-            <img src={{ url_for('static', filename = 'images/'+photo) }} alt = "test" style ='width:50px;height:50px'>  
+            <img src={{ url_for('static', filename = 'images/'+photo) }} alt = "test" style ='width:120px;height:90px'>  
             {% endif %}
-            <p> {{ card.content }} </p>
+            <p> {{ flashcards[card_id].content }} </p>
         {% endif %}
     </div>
     <form action="" method="Post" novalidate>
         <p>
-            {{ form.previous() }}    {{ form.flip }}    {{ form.next() }}
+            {% if card_id|int() > 0 %}
+                {{ form.previous() }}
+            {% else %}
+                <!-- empty space -->
+                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp                
+            {% endif %}
+                {{ form.flip() }}
+            {% if card_id|int() < listLength-1|int() %}
+                {{ form.next() }}
+            {% endif %}
         </p>
-        <a href=/viewflashcard/{{list_id}}>switch to list view</a>
+        <a href=/viewflashcard/{{list_id}}>Switch to List View</a>
     </form>
 {% else %}
- <h3> click on the link below to add a card to this empty list</h3>
 {% endif %}
-    <a href=/createflashcard/{{list_id}}>create a new flashcard</a> <br>
-    <a href=/quiz/{{list_id}}/0> click here to test yourself</a>
+    <a href=/createflashcard/{{list_id}}>Create a New Flashcard</a> <br>
+    <a href=/quiz/{{list_id}}/0>Quiz Yourself on these Flashcards</a>
 {% endblock %}

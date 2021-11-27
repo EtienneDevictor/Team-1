@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+    <form action ="" method = "POST" novalidate>
+    <h1> {{ title }} </h1>
+    {% if qLength > 0 %}
+        {% for i in range(qLength) %}
+        <p>
+            Question {{ i+1 }} of {{ qLength }}: {{ questions[flashcards[i].title] }}
+            {% if answersheet[i] != flashcards[i].title %}
+                &nbsp WRONG
+            {% endif %}
+            <br>
+            Your Answer:<br> {{answersheet[i]}} <br> <br>
+            Correct Answer:<br> {{flashcards[i]}} <br> <br>
+        </p>
+        {% endfor %}
+    {% endif %}
+    {{ answersheet.clear() }}
+        </p>
+            <a href=/flashList/{{list_id}}/0>View Flashcards Again</a> <br>
+            <a href=/quiz/{{list_id}}/0>Take this Quiz Again</a>
+{% endblock %}
+
+
