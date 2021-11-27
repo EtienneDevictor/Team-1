@@ -14,9 +14,7 @@
             {{ form.submit() }}
         </p>
     </form>
-    {% for note in notes %}
-        <a href=note/{{note.id}}>{{ note.title }}</a> <!-- this will be the note viewer-->
-    {% endfor %}
+        <a href=/viewnotes/{{ class_id }}>View Notes</a> <!-- this will be the note viewer-->
     <div>
         <a href=/uploadnotes/{{class_id}}>Upload new Notes</a>
         <a href=/ShareClass/{{class_id}}>Share Class</a>

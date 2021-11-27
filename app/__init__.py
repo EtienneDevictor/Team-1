@@ -13,8 +13,13 @@ if not os.path.isdir(UPLOAD_FOLDER):
 PDF_FOLDER = basedir + '/pdfFiles'
 if not os.path.isdir(PDF_FOLDER):
     os.mkdir(PDF_FOLDER)
+
+IMAGES_FOLDER = basedir + '/images'
+if not os.path.isdir(IMAGES_FOLDER):
+    os.mkdir(IMAGES_FOLDER)
     
 app_obj.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app_obj.config['IMAGES_FOLDER'] = IMAGES_FOLDER
 app_obj.config.from_mapping(
 	SECRET_KEY = 'who cares',
 	# location of the app database
