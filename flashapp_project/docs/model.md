@@ -2,13 +2,13 @@
 
 ## Class User()
 
-​    	User table that stored login info about every user 
-
-​		 and includes a many to many relationship to Class table   
+User object that stored login info about every user 
+and includes a many to many relationship to Class    
 
 #### Functions 
 
 ###### __repr__(self) 
+
     returns the username of the User
     
             Parameters:
@@ -38,9 +38,10 @@
 
 ## Class Class()
 
-Table that stores all data relating to class. This table has a many to many relationship with User() and a one to many relationship with Notes() and Cardlist()
+Object that stores all data relating to class. This object has a many to many relationship with User and a one to many relationship with Notes and Cardlist
 
 #### Functions 
+
 	returns the title of the Class
 	
 	    Parameters:
@@ -48,9 +49,13 @@ Table that stores all data relating to class. This table has a many to many rela
 	
 	    Returns:
 	            The title of the Class
+
 ## Class Notes()
 
+Object that stores the file path, title and many to one relationship with Class of Notes 
+
 #### Functions 
+
 	returns the title of the Notes
 	
 	    	Parameters:
@@ -58,9 +63,14 @@ Table that stores all data relating to class. This table has a many to many rela
 	
 	  	  	Returns:
 	            	The title of the Notes
+
 ## Class Cardlist()
 
+Object that stores the title, many to one relationship with Class, and 
+the one to many relationship with flashcard of Card list
+
 #### Functions 
+
 	returns the title of the Cardlist
 	
 	   	 	Parameters:
@@ -68,9 +78,13 @@ Table that stores all data relating to class. This table has a many to many rela
 	
 	    	Returns:
 	            	The title of the Cardlist
+
 ## Class FlashCard()
 
+Object that stores the title, image path, content, and many to one relationship with card list of Flashcards
+
 ### Functions 
+
 	returns the title of the FlashCard
 	
 	    Parameters:
