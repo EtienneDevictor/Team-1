@@ -20,7 +20,7 @@ This file simply runs the application
 		descrition of what in the init file 
 
 ###### forms.py	
-[Class SignInForm()](/form/#class-signinform) <br>
+[Class SignInForm()](/forms/#class-signinform) <br>
 [Class LoginForm()](/forms/#class-loginform) <br>
 [Class ClassCreator()](/forms/#class-classcreators) <br>
 [Class ListCreator()](/forms/#class-listcreator) <br>

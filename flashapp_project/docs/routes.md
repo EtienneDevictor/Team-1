@@ -13,7 +13,7 @@ returns:
 
 takes in user entered info to create a [Users()](/model/#class-user) object in and enters it into the database
 	
-returns: rendering of signup.html with [SignInForm()](/form/#class-signinform) <br>
+returns: rendering of signup.html with [SignInForm()](/forms/#class-signinform) <br>
 
 ## func login()
 
