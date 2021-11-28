@@ -143,35 +143,34 @@ def notes(class_id):
 def viewnotes(class_id):
     title = 'Notes'
     names = Notes.query.filter_by(class_id = class_id)
-    path = '/app/mdFiles/'
+    path = '/app/static/mdFiles/'
     return render_template('viewnotes.html', title = title, names = names, path = path, class_id = class_id)
     
-@app_obj.route('/app/mdFiles/<name>', methods = ['GET', 'POST'])
+@app_obj.route('/app/static/mdFiles/<name>', methods = ['GET', 'POST'])
 def opener(name):
-    with open('./app/mdFiles/' + name) as f:
+    with open('./app/static/mdFiles/' + name) as f:
         text = f.read()
         html = markdown.markdown(text)
-    return render_template_string(html)
-    #Have this extend the base html
+    return render_template('base.html') + render_template_string(html)
 
-@app_obj.route('/app/mdFiles/<name>/convert', methods = ['GET', 'POST'])
+
+@app_obj.route('/app/static/mdFiles/<name>/convert', methods = ['GET', 'POST'])
 def converter(name):
-    with open('./app/mdFiles/' + name) as f:
+    with open('./app/static/mdFiles/' + name) as f:
         title = 'Converted'
         file_name = f'{name}.pdf'
         text = f.read()
         html = markdown.markdown(text)
-        file_path = f'./app/pdfFiles/{name}.pdf'
+        file_path = f'./app/static/pdfFiles/{name}.pdf'
         output = open(file_path, "w+b")
         pisa_status = pisa.CreatePDF(html, dest = output)
         output.close()
         return render_template('converted.html', title = title, file_name = file_name)
 
-@app_obj.route('/app/pdfFiles/<name>', methods = ['GET', 'POST'])
+@app_obj.route('/app/static/pdfFiles/<name>', methods = ['GET', 'POST'])
 def download(name):
-    return send_from_directory(directory=os.path.join(app_obj.root_path,'pdfFiles'), path=name)
+    return send_from_directory(app_obj.config['PDF_FOLDER'], name)
         
-
 @app_obj.route("/logout")
 @login_required
 def logout():

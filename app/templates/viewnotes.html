@@ -3,7 +3,7 @@
 <h1> {{ title }} </h1>
 <ul>
 {% for titles in names %}
-    <li> <a href ='/app/mdFiles/{{titles}}'> {{ titles }} </a> <a href ='/app/mdFiles/{{titles}}/convert'>  Convert To PDF</li>
+    <li> <a href ='/app/static/mdFiles/{{titles}}'> {{ titles }} </a> <a href ='/app/static/mdFiles/{{titles}}/convert'>  Convert To PDF</li>
 {% endfor %}
 </ul>
 <a href=/uploadnotes/{{class_id}}>Upload new Notes</a>
