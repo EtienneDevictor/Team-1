@@ -7,14 +7,14 @@ This is an website used for the creation, studying, and storage of flashcards an
 
 clone the https://github.com/EtienneDevictor/Team-1 git repository
 
-create and enviroment variable and pip install
-- flask
-- flask_login
-- flask_wtf
-- flask_sqlalchemy
-- xhtml2pdf
-- markdown
-- mkdocs
+create and enviroment variable and pip install <br>
+- flask <br>
+- flask_login <br>
+- flask_wtf <br> 
+- flask_sqlalchemy <br>
+- xhtml2pdf <br>
+- markdown <br>
+- mkdocs 
 
 	
 ## Project Layout
