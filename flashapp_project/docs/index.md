@@ -73,7 +73,7 @@ init also contains the app configurations and login manager
 
 ###### mdFiles
 
-this folder stores all the mdfiles that user uploads as notes in the [notes(class_id)] method in the (/routes/#func-notesclass_id)[routes.py](/routes) file. this folder should only ever contain markdown files
+this folder stores all the mdfiles that user uploads as notes in the [notes(class_id)](/routes/#func-notesclass_id) method in the [routes.py](/routes) file. this folder should only ever contain markdown files
 
 ###### static/images 
 
