@@ -1,11 +1,21 @@
 
 # Welcome to Study App
 
-Desciption of the app 
+This is an website used for the creation, studying, and storage of flashcards and notes  
 	
 ## Installation 
 
-how to install the app just he clone directory thing for git 
+clone the https://github.com/EtienneDevictor/Team-1 git repository
+
+create and enviroment variable and pip install
+- flask
+- flask_login
+- flask_wtf
+- flask_sqlalchemy
+- xhtml2pdf
+- markdown
+- mkdocs
+
 	
 ## Project Layout
 
@@ -17,7 +27,9 @@ This file simply runs the application
 
 ###### __init__.py
 
-		descrition of what in the init file 
+initializes the python library and creates the app object
+sets path to storage folders for images and markdown files
+init also contains the app configurations and login manager
 
 ###### forms.py	
 [Class SignInForm()](/forms/#class-signinform) <br>
@@ -61,11 +73,15 @@ This file simply runs the application
 
 ###### mdFiles
 
-		description of what kind of files are contained 
+this folder stores all the mdfiles that user uploads as notes in the [notes(class_id)] method in the (/routes/#func-notesclass_id)[routes.py](/routes) file. this folder should only ever contain markdown files
+
+###### static/images 
+
+this folder stores all the images that user upload when creating flashcards in the [create(list_id)](/routes/#func-createlist_id) method in [routes.py](/routes) file. this folder should only ever contain jpegs
 
 ###### templates
 
-		description of what kind of ifles are contained
+this folder contains all the html files that are refereced in render_template call in the [routes.py](/routes) file
 
 
 ​	
