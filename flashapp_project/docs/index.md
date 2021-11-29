@@ -69,7 +69,7 @@ init also contains the app configurations and login manager
 [func up(num, length)](/routes/#func-upnum-length) <br>
 [func down(num, length)](/routes/#func-downnum-length) <br>
 [func share_class(class_id)](/routes/#func-share_classclass_id) <br>
-
+[func show_answers(list_id)](/routes/#func-show_answerslist_id) <br>
 
 ###### mdFiles
 

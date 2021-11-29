@@ -9,6 +9,11 @@ returns:
 
 ## func delete()
 
+takes in the login and password of a user and removes [Users()](/model/#class-user) from the database
+
+returns: 
+        rendering of delete.html with [LoginForm()](/forms/#class-loginform) <br>
+
 ## func signup()
 
 takes in user entered info to create a [Users()](/model/#class-user) object in and enters it into the database
@@ -18,6 +23,11 @@ returns: rendering of signup.html with [SignInForm()](/forms/#class-signinform) 
 ## func login()
 
 ## func find()
+
+takes in text entered by user and prints all flashcards in the [Users()](/model/#class-class) with the text inside their content
+
+returns:
+        rendering of viewflashcards.html with [fTextInFileForm()](/forms/#class-ftextinfileform) <br>   
 
 ## func create(list_id)
 
@@ -52,7 +62,7 @@ returns:
 provides a list of the active users classes that they can pick to open or can take in user inputted data to create a new [Class()](/model/#class-class) object
 	
 returns:
-a rendering of of class.html with a list of classes and the [ClassCreator()](/forms/#class-classcreators) form
+        a rendering of of class.html with a list of classes and the [ClassCreator()](/forms/#class-classcreators) form
 
 ## func inside_class(class_id)
 
@@ -69,25 +79,60 @@ returns:
 
 provides a flashcard view of flashcard in specified list with a form to flip and change flashcard; also provides a link to switch to list [view(list_id)](/routes/#func-viewlist_id) and to [create(list_id)](/routes/#func-createlist_id) flashcard
 
-parameter:
+parameters:
 		list_id: the unique identification number of the [Cardlist()](/model/#class-cardlist) object 
 		card_id: the unique identification number of the [FlashCard()](/model/#class-flashcard) object to be viewed
 		
 returns:
 		rendering of flashcards.html with [FlashCardForm()](/forms/#class-flashcardform) and specified flashcard
 
-## func quiz(list_id,question num)
+## func quiz(list_id,question_num)
+
+creates the form [QuizForm()](/forms/#class-quizform) and collects the user submitted answers
+
+parameters:
+        list_id: the unique identification number of the [Cardlist()](/model/#class-cardlist) object
+        question_num: variable to keep track of the question number for the quiz form
+
+returns: 
+        renders quiz.html with the [QuizForm()](/forms/#class-quizform)
+        when submitted, redirects to [show_answers(list_id)](/routes/#func-show_answerslist_id) and flashes the number of questions answered correctly
 
 ## func up(num, length)
+increments the question number by 1 if it is less than the length to move through the [QuizForm()](/forms/#class-quizform)
+
+parameter:
+        num: int variable to represent the question number
+        length: int variable to represent the total number of quiz questions
+
+returns:
+        if num equals length, returns length, otherwise returns num + 1
 
 ## func down(num, length)
+decrements the question number by 1 if it is greater than 0 to move through the [QuizForm()](/forms/#class-quizform)
+
+parameters:
+        num: int variable to represent the question number
+        length: int variable to represent total number of quiz questions
+returns: 
+        if num is equal to 0, returns 0, otherwise returns num - 1
 
 ## func share_class(class_id)
 
 provides a form to that takes user inputted data to give access to another user for a class that they have access to 
 
-parameter:
+parameters:
 		class_id: the unique identification # of the [Class()](/model/#class-class) that is to be shared 
 		
 returns: 
-		a rendering of shareclass.html with  the [ShareClassForm()](/forms/#class-shareclassform)
+		a rendering of shareclass.html with the [ShareClassForm()](/forms/#class-shareclassform)
+
+##func show_answers(list_id):
+
+generates the questions, user responses, and correct responses to the quiz submitted in [quiz(list_id,question_num)](/routes/#func-quizlist_idquestion_num)
+
+parameters:
+        list_id: the unique identification number of the [Cardlist()](/model/#class-cardlist) object
+
+returns:
+        rendering of quizanswers.html displaying the quiz questions, user's response to those question, and the correct responses to the questions
