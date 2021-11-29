@@ -22,6 +22,10 @@ returns: rendering of signup.html with [SignInForm()](/forms/#class-signinform) 
 
 ## func login()
 
+takes in user entered information to check [Users()](/model/#class-user) object and matches with database. After verification, logs the user in or denies request
+
+returns: rendering of login.html with [LoginForm()](/forms/#class-loginform)
+
 ## func find()
 
 takes in text entered by user and prints all flashcards in the [Users()](/model/#class-class) with the text inside their content
@@ -51,11 +55,37 @@ returns:
 
 ## func notes(class_id)
 
+takes in user entered information to create a [Notes()](/models/#class-notes) object and saves it to the database
+
+parameters:
+		class_id: unique identifacation # of the class object containing specified notes
+
+returns: renders uploadnotes.html with [uploadNotesForm()](/forms/#class-uploadNotesForm) form 
+
+
 ## func viewnotes(class_id)
+
+returns a list view of all [Notes()](/model/#class-notes) in a specified class_id and the ability to use [converter(name)](/routes/#func-convertername) or upload new [uploadNotesForm()](/forms/#class-uploadNotesForm)
+
+parameter:
+		class_id: unique identifacation # of the class object containing specified notes
+
+returns: renders viewnotes.html with a list of notes in specified class_id
 
 ## func opener(name)
 
+takes in the specified [Notes()](/model/#class-notes) selected and converts the file into a viewable html and displays it
+
+parameter:
+		name = unique identifier for specified Notes()(/model/#class-notes)
+
+returns: renders base.html and the [Notes()](/model/#class-notes) attached
+
 ## func logout()
+
+logs user out then redirects to login page.
+
+returns: renders login.html 
 
 ## func class_selector()
 
