@@ -61,6 +61,8 @@ init also contains the app configurations and login manager
 [func notes(class_id)](/routes/#func-notesclass_id) <br>
 [func viewnotes(class_id)](/routes/#func-viewnotesclass_id) <br>
 [func opener(name)](/routes/#func-openername) <br>
+[func coverter(name)](/routes/#func-converter(name)) <br>
+[func download(name)](/routes/#func-downloadname)
 [func logout()](/routes/#func-logout) <br>
 [func class_selector()](/routes/#func-class_selector) <br>
 [func inside_class(class_id)](/routes/#func-inside_classclass_id) <br>
@@ -69,7 +71,7 @@ init also contains the app configurations and login manager
 [func up(num, length)](/routes/#func-upnum-length) <br>
 [func down(num, length)](/routes/#func-downnum-length) <br>
 [func share_class(class_id)](/routes/#func-share_classclass_id) <br>
-
+[func show_answers(list_id)](/routes/#func-show_answerslist_id) <br>
 
 ###### mdFiles
 
