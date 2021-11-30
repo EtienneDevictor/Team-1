@@ -81,6 +81,10 @@ parameter:
 
 returns: renders base.html and the [Notes()](/model/#class-notes) attached
 
+## func converter(name)
+
+## func download(name)
+
 ## func logout()
 
 logs user out then redirects to login page.
@@ -157,7 +161,7 @@ parameters:
 returns: 
 		a rendering of shareclass.html with the [ShareClassForm()](/forms/#class-shareclassform)
 
-##func show_answers(list_id):
+## func show_answers(list_id):
 
 generates the questions, user responses, and correct responses to the quiz submitted in [quiz(list_id,question_num)](/routes/#func-quizlist_idquestion_num)
 
