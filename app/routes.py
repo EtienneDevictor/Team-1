@@ -233,6 +233,14 @@ def opener(name):
 
 @app_obj.route('/app/static/mdFiles/<name>/convert', methods = ['GET', 'POST'])
 def converter(name):
+    '''
+    take in specified [Notes()](/model/#class-notes) selected and converts the file into a html file then create a new file and converts and writes into pdf format.
+
+    parameter: 
+	    	name = unique identifier for specified [Notes()](/model/#class-notes)
+
+    returns: renders converted.html with a link to open the converted pdf file
+    '''
     with open('./app/static/mdFiles/' + name) as f:
         title = 'Converted'
         file_name = f'{name}.pdf'
@@ -246,6 +254,14 @@ def converter(name):
 
 @app_obj.route('/app/static/pdfFiles/<name>', methods = ['GET', 'POST'])
 def download(name):
+    '''
+    displays specified [Notes()](/model/#class-notes) in pdf format 
+
+    parameter:
+	    	name = unique identifier for specified [Notes()](/model/#class-notes)
+
+    returns: renders [Notes()](/model/#class-notes) in pdf format
+    '''
     return send_from_directory(app_obj.config['PDF_FOLDER'], name)
         
 @app_obj.route("/logout")

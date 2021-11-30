@@ -77,13 +77,27 @@ returns: renders viewnotes.html with a list of notes in specified class_id
 takes in the specified [Notes()](/model/#class-notes) selected and converts the file into a viewable html and displays it
 
 parameter:
-		name = unique identifier for specified Notes()(/model/#class-notes)
+		name = unique identifier for specified [Notes()](/model/#class-notes)
 
 returns: renders base.html and the [Notes()](/model/#class-notes) attached
 
 ## func converter(name)
 
+take in specified [Notes()](/model/#class-notes) selected and converts the file into a html file then create a new file and converts and writes into pdf format.
+
+parameter: 
+		name = unique identifier for specified [Notes()](/model/#class-notes)
+
+returns: renders converted.html with a link to open the converted pdf file
+
 ## func download(name)
+
+displays specified [Notes()](/model/#class-notes) in pdf format 
+
+parameter:
+		name = unique identifier for specified [Notes()](/model/#class-notes)
+
+returns: renders [Notes()](/model/#class-notes) in pdf format
 
 ## func logout()
 
