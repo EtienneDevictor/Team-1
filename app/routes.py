@@ -512,3 +512,9 @@ def show_answers(list_id):
     for flashcard in flashcards:
         questions[flashcard.title] = flashcard.content
     return render_template('quizanswers.html', flashcards=flashcards, qLength=qLength, questions=questions, answersheet=answersheet, title=title, list_id=list_id)
+
+@app_obj.route('/pomodorotimer')
+@login_required
+def timer():
+    title = 'Pomodoro Timer'
+    return render_template('pomodoro.html', title = title)
