@@ -45,7 +45,7 @@ returns:
 
 ## func notes(class_id)
 
-takes in user entered information to create a [Notes()](/models/#class-notes) object and saves it to the database
+takes in user entered information and markdown file to create a [Notes()](/models/#class-notes) object and saves it to the database
 
 parameters:
 		class_id: unique identifacation # of the class object containing specified notes
@@ -55,7 +55,7 @@ returns: renders uploadnotes.html with [uploadNotesForm()](/forms/#class-uploadN
 
 ## func viewnotes(class_id)
 
-returns a list view of all [Notes()](/model/#class-notes) in a specified class_id and the ability to use [converter(name)](/routes/#func-convertername) or upload new [uploadNotesForm()](/forms/#class-uploadNotesForm)
+returns a list view of all [Notes()](/model/#class-notes) in a specified class_id and the ability to view, use [converter(name)](/routes/#func-convertername), or upload new [uploadNotesForm()](/forms/#class-uploadNotesForm)
 
 parameter:
 		class_id: unique identifacation # of the class object containing specified notes
