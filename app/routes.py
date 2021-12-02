@@ -518,3 +518,31 @@ def show_answers(list_id):
 def timer():
     title = 'Pomodoro Timer'
     return render_template('pomodoro.html', title = title)
+
+@app_obj.route('/todolisteditor', methods = ['POST', 'GET'])
+@login_required
+def todo_list() :
+    form = ToDoListForm()
+    if form.validate_on_submit:
+        title = form.title.data
+        rank = form.rank.data
+        task = Todolist(title=title, rank=rank, user_id = current_user.id)
+        db.session.add(task)
+        db.session.commit()
+    items = current_user.todo
+    items_by_rank = []
+    for i in range(0, 10):
+        items_by_rank.append([])
+    for item in items:
+        if item.rank is not None:
+            items_by_rank[item.rank - 1].append(item)
+    return render_template('todolist.html', form=form, items=items_by_rank)
+    
+@app_obj.route('/deleteItem/<int:id>')
+@login_required
+def delete_item(id):
+    toRemove = current_user.todo.filter_by(id=id).first()
+    db.session.delete(toRemove)
+    db.session.commit()
+    return redirect('/todolisteditor')
+    

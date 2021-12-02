@@ -3,7 +3,7 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField, Field
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import validators
 from wtforms.widgets import TextArea
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, NumberRange
 
 class SignInForm(FlaskForm):
     username = StringField('User', validators=[DataRequired()])
@@ -60,4 +60,9 @@ class QuizForm(FlaskForm):
     
 class ShareClassForm(FlaskForm):
     username = StringField('Enter the name of the user you wish to share this list with', validators = [DataRequired()])
-    share = SubmitField('Share')   
+    share = SubmitField('Share')  
+    
+class ToDoListForm(FlaskForm): 
+    title = StringField('to be completed', validators = [DataRequired()]) 
+    rank = StringField('Priority Level', validators = [DataRequired(), NumberRange(min=1, max=10, message='Invalid Rank')])
+    insert = SubmitField('Insert in List')
