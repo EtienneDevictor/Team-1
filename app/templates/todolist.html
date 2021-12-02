@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h1> To Do List </h1> 
+{% for list in items %}
+    {% for item in list %}
+        <ul> {{ item.title }}   <a href=/deleteItem/{{item.id}}>remove</a></ul> 
+    {% endfor %}
+{% endfor %}
+<form action="" method="Post" novalidate>
+    <p>
+        {{ form.title.label }} <br>
+        {{ form.title() }}
+    </p>
+    <p>
+        {{ form.rank.label }} <br>
+        {{ form.rank() }}
+    </p>
+    <p>
+        {{ form.insert() }}
+    </p>
+</form>
+
+{% endblock %}

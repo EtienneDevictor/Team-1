@@ -14,6 +14,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(128), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     classes = db.relationship('Class', secondary=classes, backref=db.backref('users'), lazy='dynamic')
+    todo = db.relationship('Todolist', backref='author', lazy='dynamic', cascade='all, delete-orphan')
 
     def __repr__(self):
         return f'{ self.username }'
@@ -23,7 +24,16 @@ class User(UserMixin, db.Model):
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
-        
+
+class Todolist(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    rank = db.Column(db.Integer)
+    title = db.Column(db.String)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    
+    def __repr__(self):
+        return f'{self.rank}, { self.title }'
+      
 class Class(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(128), index=True)
