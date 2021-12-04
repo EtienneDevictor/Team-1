@@ -56,7 +56,6 @@ def signup():
     header = 'Register Account'
     form = SignInForm()
     if form.validate_on_submit():
-        flash("attempting to create an account")
         username = User.query.filter_by(username=form.username.data).first()
         email = User.query.filter_by(email=form.email.data).first()
         if username is not None:
@@ -64,6 +63,7 @@ def signup():
         elif email is not None:
             flash('The provided username already belongs to another account')
         else:
+            flash("Account Created")
             user = User(username=form.username.data, email=form.email.data)
             user.set_password(form.password.data)
             db.session.add(user)
