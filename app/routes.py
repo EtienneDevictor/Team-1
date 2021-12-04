@@ -529,14 +529,8 @@ def todo_list() :
         task = Todolist(title=title, rank=rank, user_id = current_user.id)
         db.session.add(task)
         db.session.commit()
-    items = current_user.todo
-    items_by_rank = []
-    for i in range(0, 10):
-        items_by_rank.append([])
-    for item in items:
-        if item.rank is not None:
-            items_by_rank[item.rank - 1].append(item)
-    return render_template('todolist.html', form=form, items=items_by_rank)
+    tasks = current_user.todo.order_by(Todolist.rank)
+    return render_template('todolist.html', form=form, items=tasks)
     
 @app_obj.route('/deleteItem/<int:id>')
 @login_required
