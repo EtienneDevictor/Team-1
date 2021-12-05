@@ -1,4 +1,58 @@
 {% extends "base.html" %}
 {% block content %}
-<h1> Welcome to {{app}} </h1>
+<header class-="jumbotron jumbotron-fluid">
+    <div class="Container-fluid text-center">
+        <h1 class="display-3">The Best Way to Study For Your Courses</h1>
+        <p class="lead pb-4">We allow you to create and study flashcards and notes 
+            and also provide you with the tools to optimize your studying
+        </p>
+    </div>
+</header>
+<section id="services" class="container">
+    <h2 class="display-4 text-center mt-5 mb-3">Services</h2>
+    
+    <div class="row text-center" >
+       <div class="col-md-4 mb-4" >
+          <div class="card h-100" style="background-color: #DDDEB3" >
+             <img class="card-img-top" src="design.jpg" alt="flash card image"> <!-- choice of the picture -->
+             <div class="card-body">
+                <h4 class="card-title">Flashcards</h4>
+                <p class="card-text"> Study better by creating and flipping through different flashcards and notes files!</p>
+             </div>
+             <div class="card-footer py-4">
+                <a href="/find" class="btn btn-secondary">Find a Flashcard &raquo;</a> 
+             </div>
+          </div>
+       </div>
+       
+       <div class="col-md-4 mb-4"  >
+          <div class="card h-100" style="background-color: #DDDEB3">
+             <img class="card-img-top" src="development.jpg" alt="image of the classes page"> <!-- choice of the picture -->
+             <div class="card-body">
+                <h4 class="card-title">Classes</h4>
+                   <p class="card-text">Stay organized by seperating notes and flashcards of different subjects in seperate classes
+                       that you can share with other users!
+                   </p>
+             </div>
+             <div class="card-footer py-4">
+                <a href="/ClassList" class="btn btn-secondary">Go to Classes &raquo;</a> 
+             </div>
+          </div>
+       </div>
+       
+       <div class="col-md-4 mb-4"  >
+          <div class="card h-100" style="background-color: #DDDEB3">
+             <img class="card-img-top" src="analytics.jpg" alt="image of the todolist page"> <!-- choice of the picture -->
+             <div class="card-body">
+                <h4 class="card-title">Study Aids</h4>
+                <p class="card-text">Stay on top of things by keeping track of studing tasks with our task tracker and and remember 
+                    to use our pomodoro timer to maintain healthy studying!</p>
+             </div>
+             <div class="card-footer py-4">
+                <a href="/todolisteditor" class="btn btn-secondary">See your Task list &raquo;</a> 
+             </div>
+          </div>
+       </div>
+    </div>
+ </section>
 {% endblock %}
