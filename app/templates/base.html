@@ -11,7 +11,7 @@
         
     </head>
 
-    <body>
+    <body style="background-color: #77A59C"  >
         <h1>{{ header }}</h1> 
         {% with messages = get_flashed_messages() %} <!--flashed messages-->
         {% if messages %}
@@ -24,7 +24,7 @@
         {% endwith %}
         
         <!-- navbar -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">Study Helper</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
