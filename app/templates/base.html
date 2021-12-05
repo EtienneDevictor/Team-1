@@ -7,6 +7,42 @@
         <title> Home </title>
         {% endif %}
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <style>
+            .grid_btn { /* these are the link buttons used in class, inside_class, and anywhere else a link button shows up */
+                background-color: #c9c9A3;
+                color: black;
+                padding: 6px 12px;          
+             }
+
+
+            .grid-container {
+                background-color: #2D4f5D; 
+                display: inline-grid;
+                grid-template-columns: 350px 350px 350px;
+                grid-gap: 20px;
+                padding: 20px
+            }
+
+            .grid-item {
+                background-color: #c9c9A3;
+                border-color: #21353F;
+                border: 15px solid #2D4f5D;
+                padding: 20px;
+                font-size: 30px;
+                text-align: center;
+                border: solid;
+            }
+
+            .link_cont {
+                padding: 10px 15px;
+            }
+
+            .btn-secondary { /* these are the link buttons on the home page */
+                background-color: transparent;
+                border-color: #c60063;
+                color: #c60063;
+            }
+        </style>
     </head>
 
     <body style="background-color: #77A59C"  >
@@ -63,7 +99,7 @@
         <hr>
         <div class="container">
             <div class="row">
-                <div class="col-sm-auto">
+                <div class="col-sm-auto" style="text-align: center;">
                     {% block content %} {% endblock %}
                 </div>
         </div>
