@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <h1> {{ title }} </h1>
-<div class="container-fluid">
+<div class="container" style='margin: 0 auto;'>
     <div class="row align-items-center">
         <div class="col">
             <div class="btn-group" role="group" aria-label="timegroup">
@@ -27,6 +27,7 @@
 
 var time = 25 * 60; // default 25 minutes
 var x = 'filler'    // set x as global variable
+var min = 25
 
 // Update the count down every 1 second
 // runs start() every 1000 ms, or 1 second
@@ -40,6 +41,7 @@ function start() {
     var minutes = Math.floor(time / 60);
     var seconds = time % 60;
     
+    minutes = minutes < 10 ? '0' + minutes : minutes;
     seconds = seconds < 10 ? '0' + seconds : seconds;  
   
     // Output the result in an element with id="timer"
@@ -48,13 +50,17 @@ function start() {
 
     // If the count down is over, COMPLETE message shown 
     if (time < 0) {
-        clearInterval(x);
+        setTime(min);
+        clearInterval(x)
         alert('Timer is up')
+        document.getElementById("startButton").style.display='inline';
+        document.getElementById("pauseButton").style.display='none';
     }
-    time--;
-    document.getElementById("startButton").style.display='none';
-    document.getElementById("pauseButton").style.display='inline';
-    document.getElementById("resetButton").style.display='inline';
+    else{
+        time--;
+        document.getElementById("startButton").style.display='none';
+        document.getElementById("pauseButton").style.display='inline';
+    }
 }
 
 function setPause(){
@@ -65,6 +71,7 @@ function setPause(){
 
 // Resets timer
 function reset(t) {
+    min = t
     setTime(t)
     clearInterval(x)
     document.getElementById("pauseButton").style.display='none';
@@ -99,6 +106,7 @@ function setTime(t) {
     var minutes = Math.floor(time / 60);
     var seconds = time % 60;
 
+    minutes = minutes < 10 ? '0' + minutes : minutes;
     seconds = seconds < 10 ? '0' + seconds : seconds;
 
     document.getElementById("timer").innerHTML = minutes + ":" + seconds;
