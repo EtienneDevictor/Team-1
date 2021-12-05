@@ -1,23 +1,53 @@
 {% extends "base.html" %}
 {% block content %}
 <h1> {{ title }} </h1>
-<body>
-<p>
-    <!--iframe src="https://pomofocus.io/" width="1400"height="700"></iframe-->
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-6"></div>
-            <div class="col-sm-6"></div>  
+<p id="countdown" style="display:inline-flex; align-items:center; justify-content:center; font-size:50px; margin:0; height:70px; width:200px;"></p>        
+<div class="container-fluid">
+    <div class="row align-items-center">
+        <p id="demo" style="text-align: center; font-size: 60px; margin-top: 0px;"></p>
+        <div class="col">
+            <button class="btn btn-primary btn-sm" onclick="start()">Start</button>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-secondary btn-sm">Small button</button>
+        </div>
     </div>
-    <div class="row">
-        <div class="col-sm-4"></div>
-        <div class="col-sm-4"></div>
-        <div class="col-sm-4"></div>
-  </div>
-  <div class="row">
-    ...
-    aaa
-  </div>
 </div>
-</p>
+<script>
+
+var time = 25 * 60;
+var pause = true
+// Update the count down every 1 second
+
+function setPause(){
+    pause = true;
+}
+
+function start(){
+    pause = false;
+}
+
+if (!pause){
+    var x = setInterval(function() {
+
+        // Time calculations for days, hours, minutes and seconds
+        var minutes = Math.floor(time / 60);
+        var seconds = time % 60;
+    
+        seconds = seconds < 10 ? '0' + seconds : seconds;  
+  
+        // Output the result in an element with id="demo"
+        document.getElementById("demo").innerHTML = minutes + ":" + seconds;
+        document.title = minutes + ":" + seconds;
+
+        // If the count down is over, COMPLETE message shown 
+        if (time < 0) {
+            clearInterval(x);
+            document.getElementById("demo").innerHTML = "COMPLETE";
+        }
+        time--;
+    }, 1000);
+}
+</script>
+
 {% endblock %}
