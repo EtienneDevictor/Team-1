@@ -1,7 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
-<h1> {{ title }} </h1>
-<div class="container" style='margin: 0 auto;'>
+<div class='container' style='position: absolute;
+margin:0 auto;'>
+    <h1> {{ title }} </h1>
+</div>
+<div class="container" style='position: absolute;
+    margin:0 auto;
+    top: 25%;'>
     <div class="row align-items-center">
         <div class="col">
             <div class="btn-group" role="group" aria-label="timegroup">
@@ -9,8 +14,8 @@
                 <button id = "breakButton" type="button" class="btn btn-primary btn-lg" onclick="reset(5)">Break</button>
                 <button id = "longBreakButton" type="button" class="btn btn-primary btn-lg" onclick="reset(15)"> Long Break</button>
             </div>
-        <p id="timer" class="rounded" style="font-size: 60px; margin-top: 0px; background-color: white">25:00</p>
-        <div class="row align-items-center">
+        <p id="timer" class="rounded" style="font-size: 60px; margin-left: 10%; margin-right: 10%; background-color: white">25:00</p>
+        <div class="row align-items-center"style= 'margin-left: 20%; margin-right: 20%'>
             <div class="col">
                 <button id = "pauseButton" type="button" class="btn btn-primary btn-sm" style="display: none;" onclick="setPause()">Pause</button>
                 <button id = "startButton" type="button" class="btn btn-primary btn-sm" onclick="run()">Start</button>
