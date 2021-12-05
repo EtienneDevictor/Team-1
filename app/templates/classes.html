@@ -3,10 +3,10 @@
     <h1> Pick Which Class Contains The Desired FlashCards</h1>
     <form action ="" method="POST" novalidate>
         {{ form.hidden_tag() }}
-        <div class="grid-container" style="max-height: 150;">
+        <div class="grid-container" >
             {% for user in user_classes %} 
             <div class="grid-item">
-                <a class="grid_btn" style="text-decoration:none"  href=/ClassContent/{{user.id}}>{{ user.title }}</a>
+                <a class="grid_btn"  href=/ClassContent/{{user.id}}>{{ user.title }}</a>
             </div>
             {% endfor %}
          </div>

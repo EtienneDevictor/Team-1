@@ -1,11 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1> Pick Which Class Contains The Desired FlashCards</h1>
+<div >
+    <a class="btn btn-secondary" href=/viewnotes/{{ class_id }}>View Notes</a> 
+    <a class="btn btn-secondary" href=/ShareClass/{{class_id}}>Share Class</a>
+</div>
+    <h1> Pick Which List Contains The Desired Cards</h1>
     <form action ="" method="POST" novalidate>
         {{form.hidden_tag() }}
+        <div class="grid-container" style="max-height: 150;">
         {% for list in cardlists %}
-            <a href=/flashList/{{list.id}}/0>{{ list.title }}</a>
+            <div class="grid-item">
+                 <a class="grid_btn"   href=/flashList/{{list.id}}/0>{{ list.title }}</a>
+            </div>
         {% endfor %}
+        </div>
+        <h2> Create a new FlashCard List</h2> 
         <p>
             {{ form.title.label }} <br>
             {{ form.title() }}
@@ -14,11 +23,5 @@
             {{ form.submit() }}
         </p>
     </form>
-        <a href=/viewnotes/{{ class_id }}>View Notes</a> <!-- this will be the note viewer-->
-    <div>
-        <a href=/uploadnotes/{{class_id}}>Upload new Notes</a>
-        <a href=/ShareClass/{{class_id}}>Share Class</a>
-    </div>
-    
     
 {% endblock %}
