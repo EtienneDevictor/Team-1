@@ -7,6 +7,7 @@
             <div class="btn-group" role="group" aria-label="timegroup">
                 <button id = "pomodoroButton" type="button" class="btn btn-primary btn-lg" onclick="reset(25)" disabled>Pomodoro</button>
                 <button id = "breakButton" type="button" class="btn btn-primary btn-lg" onclick="reset(5)">Break</button>
+                <button id = "longBreakButton" type="button" class="btn btn-primary btn-lg" onclick="reset(15)"> Long Break</button>
             </div>
         <p id="timer" class="rounded" style="font-size: 60px; margin-top: 0px; background-color: white">25:00</p>
         <div class="row align-items-center">
@@ -17,6 +18,7 @@
             <div class="col">
                 <button id = "resetButton25" type="button" class="btn btn-secondary btn-sm" onclick="reset(25)">Reset</button>
                 <button id = "resetButton5" type="button" class="btn btn-secondary btn-sm" style="display: none;" onclick="reset(5)">Reset</button> 
+                <button id = "resetButton15" type="button" class="btn btn-secondary btn-sm" style="display: none;" onclick="reset(15)">Reset</button> 
             </div>
         </div>
     </div>
@@ -70,13 +72,25 @@ function reset(t) {
     if (t == 5){
         document.getElementById("pomodoroButton").disabled=false;
         document.getElementById("breakButton").disabled=true;
+        document.getElementById("longBreakButton").disabled=false;
         document.getElementById("resetButton25").style.display='none';
-        document.getElementById("resetButton5").style.display='inline';}
+        document.getElementById("resetButton5").style.display='inline';
+        document.getElementById("resetButton15").style.display='none';}
+    else if (t == 15){
+        document.getElementById("pomodoroButton").disabled=false;
+        document.getElementById("breakButton").disabled=false;
+        document.getElementById("longBreakButton").disabled=true;
+        document.getElementById("resetButton25").style.display='none';
+        document.getElementById("resetButton5").style.display='none';
+        document.getElementById("resetButton15").style.display='inline';
+    }
     else{
         document.getElementById("pomodoroButton").disabled=true;
         document.getElementById("breakButton").disabled=false;
+        document.getElementById("longBreakButton").disabled=false;
         document.getElementById("resetButton5").style.display='none';
-        document.getElementById("resetButton25").style.display='inline';}              
+        document.getElementById("resetButton25").style.display='inline';
+        document.getElementById("resetButton15").style.display='none';}              
 }
 
 function setTime(t) {
