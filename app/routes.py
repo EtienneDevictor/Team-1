@@ -107,6 +107,7 @@ def find():
     form = fTextInFileForm()
     if form.validate_on_submit(): 
         flash(f'Loading flashcards with {form.text.data}')
+        title = f'Find FlashCard ({form.text.data})'
         user_classes = current_user.classes
         flashlists = []
         for category in user_classes:
