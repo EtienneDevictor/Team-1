@@ -1,17 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
 {% if flashcards %}
-    <div style="width:200px;height:150px">
+    <div style="width: 50%; height: 325px; margin: auto; border: solid; padding: 25px; display: flex; justify-content: center; align-items: center; background-color: #DDDEB3; border-radius: 5%">
         {% if front %}
             <h2> {{ flashcards[card_id].title }} </h2> <br>
         {% else %}
             {% if has_photo %}
-            <img src={{ url_for('static', filename = 'images/'+photo) }} alt = "test" style ='width:120px;height:90px'>  
+             <img src="{{ url_for('static', filename = 'images/'+photo) }}" alt = "test" style ='width:40%;height:50%'>  </div> 
             {% endif %}
-            <p> {{ flashcards[card_id].content }} </p>
+             <p>{{ flashcards[card_id].content }} </p>
         {% endif %}
     </div>
-    <form action="" method="Post" novalidate>
+    <form action="" method="Post" novalidate >
         <p>
             {% if card_id|int() > 0 %}
                 {{ form.previous() }}
@@ -25,10 +25,13 @@
                 {{ form.next() }}
             {% endif %}
         </p>
-        <a href=/viewflashcard/{{list_id}}>Switch to List View</a>
+        
     </form>
 {% else %}
 {% endif %}
-    <a href=/createflashcard/{{list_id}}>Create a New Flashcard</a> <br>
-    <a href=/quiz/{{list_id}}/0>Quiz Yourself on these Flashcards</a>
+<div >
+    <a class="btn btn-secondary" style="margin: 5px" href=/viewflashcard/{{list_id}}>Switch to List View</a> <br>
+    <a class="btn btn-secondary" style="margin: 5px" href=/createflashcard/{{list_id}}>Create a New Flashcard</a> <br>
+    <a class="btn btn-secondary" style="margin: 5px" href=/quiz/{{list_id}}/0>Quiz Yourself on these Flashcards</a> 
+</div>
 {% endblock %}
