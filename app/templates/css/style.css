@@ -1,0 +1,15 @@
+.link_btn {
+    background-color: #199319;
+    color: white;
+    padding: 20px 30px;
+}
+
+.jumbotron {
+    background: url("image.jpg") no-repeat center;
+}
+
+.btn-secondary {
+    background-color: transparent;
+    border-color: #c60063;
+    color: #c60063;
+}
