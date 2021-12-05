@@ -3,15 +3,22 @@
     <h1> {{ title }} </h1>
         <p>
         {% if flashcards %}
-        <ul>    
-            {% for f in flashcards %}
-            <li> {{ f.title }}: {{ f.content }} </li>
-        {% endfor %}
+        <ul>  
+            <div class="grid-container2" > 
+            {% for f in flashcards %} 
+                <div class="grid-item" style="border-radius:0px;">
+                    {{ f.title }}
+                </div>
+                <div class="grid-item" style="background-color: #e3e4cb; border-radius: 0px ;">
+                    {{ f.content }}
+                </div>
+                {% endfor %}
+             </div> 
         </ul>
         {% endif %}
         </p>
     {% if list_id %}
-        <a href=/flashList/{{list_id}}/0>Back to Flashcard View</a>
+        <a class="btn btn-secondary" href=/flashList/{{list_id}}/0>Back to Flashcard View</a>
     {% endif %}
 {% endblock %}
 

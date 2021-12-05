@@ -167,7 +167,7 @@ def view(list_id):
         returns:
 		    a rendering of viewflashcard.html with a list of flashcards in list with id=list_id
      '''
-    title = "View Flashcards"
+    title = f"View Flashcards in {Cardlist.query.filter_by(id=list_id).first().title}"
     flashcards = FlashCard.query.filter_by(cardList_id=list_id)
     return render_template("viewflashcards.html", title = title, flashcards = flashcards, list_id=list_id)
                 
@@ -348,6 +348,7 @@ def flashlist(list_id, card_id):
     flashcards = []
     flashcards.extend(FlashCard.query.filter_by(cardList_id=list_id))
     form = FlashCardForm()
+    title = Cardlist.query.filter_by(id=list_id).first().title
     listLength = len(flashcards)
     global front
     if listLength > 0:
@@ -379,8 +380,8 @@ def flashlist(list_id, card_id):
                 front = True
             return redirect(f'/flashList/{list_id}/{card_id}')
     if len(flashcards) == 0:
-        return render_template('flashcard.html', form=form, list_id=list_id)
-    return render_template('flashcard.html', form=form, listLength=listLength, flashcards=flashcards, card_id=card_id, front=front, list_id=list_id, image = image, photo = photo, has_photo = has_photo)              
+        return render_template('flashcard.html', form=form, list_id=list_id, title=title)
+    return render_template('flashcard.html', form=form, listLength=listLength, flashcards=flashcards, card_id=card_id, front=front, list_id=list_id, image = image, photo = photo, has_photo = has_photo, title=title)              
 
 front = True
 
