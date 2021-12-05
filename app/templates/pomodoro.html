@@ -1,53 +1,95 @@
 {% extends "base.html" %}
 {% block content %}
 <h1> {{ title }} </h1>
-<p id="countdown" style="display:inline-flex; align-items:center; justify-content:center; font-size:50px; margin:0; height:70px; width:200px;"></p>        
 <div class="container-fluid">
     <div class="row align-items-center">
-        <p id="demo" style="text-align: center; font-size: 60px; margin-top: 0px;"></p>
         <div class="col">
-            <button class="btn btn-primary btn-sm" onclick="start()">Start</button>
-        </div>
-        <div class="col">
-            <button type="button" class="btn btn-secondary btn-sm">Small button</button>
+            <div class="btn-group" role="group" aria-label="timegroup">
+                <button id = "pomodoroButton" type="button" class="btn btn-primary btn-lg" onclick="reset(25)" disabled>Pomodoro</button>
+                <button id = "breakButton" type="button" class="btn btn-primary btn-lg" onclick="reset(5)">Break</button>
+            </div>
+        <p id="timer" class="rounded" style="font-size: 60px; margin-top: 0px; background-color: white">25:00</p>
+        <div class="row align-items-center">
+            <div class="col">
+                <button id = "pauseButton" type="button" class="btn btn-primary btn-sm" style="display: none;" onclick="setPause()">Pause</button>
+                <button id = "startButton" type="button" class="btn btn-primary btn-sm" onclick="run()">Start</button>
+            </div>
+            <div class="col">
+                <button id = "resetButton25" type="button" class="btn btn-secondary btn-sm" onclick="reset(25)">Reset</button>
+                <button id = "resetButton5" type="button" class="btn btn-secondary btn-sm" style="display: none;" onclick="reset(5)">Reset</button> 
+            </div>
         </div>
     </div>
 </div>
 <script>
 
-var time = 25 * 60;
-var pause = true
+var time = 25 * 60; // default 25 minutes
+var x = 'filler'    // set x as global variable
+
 // Update the count down every 1 second
+// runs start() every 1000 ms, or 1 second
+function run(){
+    x = setInterval(start, 1000); 
+}
+
+// Updates the clock by decrementing by one second
+function start() {
+    // Time calculations for minutes and seconds
+    var minutes = Math.floor(time / 60);
+    var seconds = time % 60;
+    
+    seconds = seconds < 10 ? '0' + seconds : seconds;  
+  
+    // Output the result in an element with id="timer"
+    document.getElementById("timer").innerHTML = minutes + ":" + seconds;
+    document.title = minutes + ":" + seconds;
+
+    // If the count down is over, COMPLETE message shown 
+    if (time < 0) {
+        clearInterval(x);
+        alert('Timer is up')
+    }
+    time--;
+    document.getElementById("startButton").style.display='none';
+    document.getElementById("pauseButton").style.display='inline';
+    document.getElementById("resetButton").style.display='inline';
+}
 
 function setPause(){
-    pause = true;
+    clearInterval(x)
+    document.getElementById("pauseButton").style.display='none';
+    document.getElementById("startButton").style.display='inline';
 }
 
-function start(){
-    pause = false;
+// Resets timer
+function reset(t) {
+    setTime(t)
+    clearInterval(x)
+    document.getElementById("pauseButton").style.display='none';
+    document.getElementById("startButton").style.display='inline';
+    if (t == 5){
+        document.getElementById("pomodoroButton").disabled=false;
+        document.getElementById("breakButton").disabled=true;
+        document.getElementById("resetButton25").style.display='none';
+        document.getElementById("resetButton5").style.display='inline';}
+    else{
+        document.getElementById("pomodoroButton").disabled=true;
+        document.getElementById("breakButton").disabled=false;
+        document.getElementById("resetButton5").style.display='none';
+        document.getElementById("resetButton25").style.display='inline';}              
 }
 
-if (!pause){
-    var x = setInterval(function() {
+function setTime(t) {
+    time = t * 60
+    // Time calculations for minutes and seconds
+    var minutes = Math.floor(time / 60);
+    var seconds = time % 60;
 
-        // Time calculations for days, hours, minutes and seconds
-        var minutes = Math.floor(time / 60);
-        var seconds = time % 60;
-    
-        seconds = seconds < 10 ? '0' + seconds : seconds;  
-  
-        // Output the result in an element with id="demo"
-        document.getElementById("demo").innerHTML = minutes + ":" + seconds;
-        document.title = minutes + ":" + seconds;
+    seconds = seconds < 10 ? '0' + seconds : seconds;
 
-        // If the count down is over, COMPLETE message shown 
-        if (time < 0) {
-            clearInterval(x);
-            document.getElementById("demo").innerHTML = "COMPLETE";
-        }
-        time--;
-    }, 1000);
+    document.getElementById("timer").innerHTML = minutes + ":" + seconds;
 }
+
 </script>
 
 {% endblock %}
