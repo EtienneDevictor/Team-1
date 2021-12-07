@@ -22,7 +22,7 @@ def home():
 	    rendering of home.html
     '''
     form = createFlashCardForm()       
-    app = 'Study App'    
+    app = 'Study App' 
     return render_template('home.html', form=form, app=app)
 
 @app_obj.route('/deleteaccount', methods=['GET', 'POST'])

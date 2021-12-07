@@ -18,9 +18,14 @@ IMAGES_FOLDER = os.path.join(basedir,'static/images')
 if not os.path.exists(IMAGES_FOLDER):
     os.makedirs(IMAGES_FOLDER)
     
+SPLASH_FOLDER = os.path.join(basedir,'static/splash')
+if not os.path.exists(SPLASH_FOLDER):
+    os.makedirs(SPLASH_FOLDER)
+
 app_obj.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app_obj.config['PDF_FOLDER'] = PDF_FOLDER
 app_obj.config['IMAGES_FOLDER'] = IMAGES_FOLDER
+app_obj.config['SPLASH_FOLDER'] = SPLASH_FOLDER
 
 app_obj.config.from_mapping(
 	SECRET_KEY = 'who cares',
