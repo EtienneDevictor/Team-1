@@ -1,12 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
 <h1> {{ title }} </h1>
-<ul>
+<div class=grid-container style="background-color: #c0c093;">
 {% for titles in names %}
-    <a class="btn btn-secondary" href=/app/static/mdFiles/{{ titles }}>View Notes: {{ titles }}</a> 
-    <a class="btn btn-secondary" href=/app/static/mdFiles/{{titles}}/convert>Convert to PDF</a>
+    <div>
+        <a class="btn btn-secondary" style="border-color: #2D4f5D; color: #2D4f5D;" href=/app/static/mdFiles/{{ titles }}>View Notes: {{ titles }}</a> 
+        <a class="btn btn-secondary" style="border-color:rgb(132, 100, 163); color:rgb(132, 100, 163)" href=/app/static/mdFiles/{{titles}}/convert>Convert to PDF</a>
+    </div>
 {% endfor %}
-</ul>
-<a class="btn btn-secondary" href=/uploadnotes/{{class_id}}>Upload New Notes</a>
+</div>
+<a class="btn btn-secondary" style="margin: 15px;" href=/uploadnotes/{{class_id}}>Upload New Notes</a>
 {% endblock %}
 
+S
