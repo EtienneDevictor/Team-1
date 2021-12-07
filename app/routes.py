@@ -197,7 +197,7 @@ def notes(class_id):
         return redirect('/uploadnotes/' + str(class_id))
     if form.is_submitted():
         flash('Please enter a md file')
-    return render_template('uploadnotes.html', title = title, form = form)
+    return render_template('uploadnotes.html', title = title, form = form, class_id=class_id)
 
 
 @app_obj.route('/viewnotes/<int:class_id>', methods = ['GET', 'POST'])
@@ -486,7 +486,7 @@ def share_class(class_id):
             category.users.append(user)
             db.session.commit()
             flash(f'{category.title} shared with {user.username}')
-        else:
+        elif form.username.data is not None:
             flash(f'{form.username.data} does not exist')
             
     return render_template('shareclass.html', form=form, class_id=class_id)       
@@ -532,6 +532,8 @@ def todo_list() :
         task = Todolist(title=title, rank=rank, user_id = current_user.id)
         db.session.add(task)
         db.session.commit()
+        form.title.data = ""
+        form.rank.data = ""
     tasks = current_user.todo.order_by(Todolist.rank)
     return render_template('todolist.html', form=form, items=tasks)
     
