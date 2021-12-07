@@ -3,7 +3,7 @@
 <h1> To Do List </h1> 
 {% for task in items %} 
         {% if task.title %}
-            <ul> {{ task.title }}   <a href=/deleteItem/{{task.id}}>remove</a></ul> 
+            <ol> <b style="font-size: 150%;">{{ task.title }}</b>   <a class="btn btn-secondary" style="color:rgb(132, 100, 163); border-color:rgb(132, 100, 163)" href=/deleteItem/{{task.id}}>remove</a></ol>
         {% endif %}
 {% endfor %}
 <form action="" method="Post" novalidate>
