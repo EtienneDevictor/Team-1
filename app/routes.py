@@ -383,7 +383,7 @@ def flashlist(list_id, card_id):
                 front = True
             return redirect(f'/flashList/{list_id}/{card_id}')
     if len(flashcards) == 0:
-        return render_template('flashcard.html', form=form, list_id=list_id, title=title)
+        return render_template('flashcard.html', form=form, list_id=list_id, title=title, listLength=listLength)
     return render_template('flashcard.html', form=form, listLength=listLength, flashcards=flashcards, card_id=card_id, front=front, list_id=list_id, image = image, photo = photo, has_photo = has_photo, title=title)              
 
 front = True

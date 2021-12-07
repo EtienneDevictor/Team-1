@@ -63,6 +63,6 @@ class ShareClassForm(FlaskForm):
     share = SubmitField('Share')  
     
 class ToDoListForm(FlaskForm): 
-    title = StringField('to be completed', validators = [DataRequired()]) 
+    title = StringField('To Be Completed', validators = [DataRequired()]) 
     rank = StringField('Priority Level', validators = [DataRequired(), NumberRange(min=1, max=10, message='Invalid Rank')])
     insert = SubmitField('Insert in List')

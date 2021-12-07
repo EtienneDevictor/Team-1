@@ -15,10 +15,11 @@
         </p>
         {% endfor %}
     {% endif %}
-    {{ answersheet.clear() }}
-        </p>
-            <a href=/flashList/{{list_id}}/0>View Flashcards Again</a> <br>
-            <a href=/quiz/{{list_id}}/0>Take this Quiz Again</a>
+    {% if answersheet.clear() %}
+    {% endif %}
+        </p>          
+            <a class="btn btn-light border border-dark" href=/flashList/{{list_id}}/0>View Flashcards Again</a><br>
+            <a class="btn btn-light border border-dark"  href=/quiz/{{list_id}}/0>Take this Quiz Again</a><br>    
 {% endblock %}
 
 

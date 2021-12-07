@@ -33,6 +33,8 @@
 <div >
     <a class="btn btn-secondary" style="margin: 5px" href=/viewflashcard/{{list_id}}>Switch to List View</a> <br>
     <a class="btn btn-secondary" style="margin: 5px" href=/createflashcard/{{list_id}}>Create a New Flashcard</a> <br>
-    <a class="btn btn-secondary" style="margin: 5px" href=/quiz/{{list_id}}/0>Quiz Yourself on these Flashcards</a> 
+    {% if listLength > 1 %}
+        <a class="btn btn-secondary" style="margin: 5px" href=/quiz/{{list_id}}/0>Quiz Yourself on these Flashcards</a> 
+    {% endif %}
 </div>
 {% endblock %}
