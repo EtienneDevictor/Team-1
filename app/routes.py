@@ -69,7 +69,7 @@ def signup():
             user.set_password(form.password.data)
             db.session.add(user)
             db.session.commit()
-            return redirect('/')
+            return redirect('/login')
     return render_template("signup.html", header=header, title='Sign Up Page', form=form)
 
 @app_obj.route('/login', methods = ['GET', 'POST'])
@@ -87,10 +87,12 @@ def login():
         if user is None or not user.check_password(form.password.data):
             flash('Invalid username or password')
             is_active = False
-            return redirect('/')
-        login_user(user, remember  = form.remember_me.data)
-        is_active = True
-        flash('Successfully logged in')
+            return redirect('/login')
+        else:
+            login_user(user, remember  = form.remember_me.data)
+            is_active = True
+            flash('Successfully logged in')
+            return redirect("/")
     return render_template("login.html", title = title, form = form)
 
 @app_obj.route('/find', methods = ['GET', 'POST'])
