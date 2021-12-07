@@ -19,8 +19,7 @@ class LoginForm(FlaskForm):
 
     submit = SubmitField('Login')
     delete = SubmitField('Delete Account')
-
-
+    
 class ClassCreator(FlaskForm):
     title = StringField('Enter new Class Name', validators=[DataRequired()])
     submit = SubmitField('Create new Class')

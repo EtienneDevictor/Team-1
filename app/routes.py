@@ -43,7 +43,7 @@ def delete():
             return redirect ('/deleteaccount') 
         db.session.delete(user)
         db.session.commit()
-        flash(f'{form.username} has been deleted')
+        flash(f'{user} has been deleted')
     return render_template("delete.html", title = 'Delete Account Page', form = form)
 
 @app_obj.route('/signup', methods=['GET', 'POST'])
@@ -86,11 +86,9 @@ def login():
         user = User.query.filter_by(username = form.username.data).first()
         if user is None or not user.check_password(form.password.data):
             flash('Invalid username or password')
-            is_active = False
             return redirect('/login')
         else:
             login_user(user, remember  = form.remember_me.data)
-            is_active = True
             flash('Successfully logged in')
             return redirect("/")
     return render_template("login.html", title = title, form = form)

@@ -94,16 +94,18 @@
                                 <li><a class="dropdown-item" href="/todolisteditor">Task List</a></li>
                                 <li><a class="dropdown-item" href="/pomodorotimer">Pomodoro Timer</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="/logout">Logout</a></li>
                                 <li><a class="dropdown-item" href="/deleteaccount">Delete Account</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/login">Sign In</a></li>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/signup">Sign Up</a></li>
-                        </li>
+                            {% if current_user.is_active %}
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="/logout">Logout</a></li>
+                            {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="/login">Sign In</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="/signup">Sign Up</a></li>
+                            {% endif %}
                     </ul>
                 </div>
             </div>
