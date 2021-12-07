@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
 <h1> {{ title }} </h1>
-<div class=grid-container style="background-color: #c0c093;">
+<div class=grid-container>
 {% for titles in names %}
-    <div>
-        <a class="btn btn-secondary" style="border-color: #2D4f5D; color: #2D4f5D;" href=/app/static/mdFiles/{{ titles }}>View Notes: {{ titles }}</a> 
+    <div class=grid-item>
+        <a class="grid_btn" href=/app/static/mdFiles/{{ titles }}>View Notes: {{ titles }}</a> 
         <a class="btn btn-secondary" style="border-color:rgb(132, 100, 163); color:rgb(132, 100, 163)" href=/app/static/mdFiles/{{titles}}/convert>Convert to PDF</a>
     </div>
 {% endfor %}
