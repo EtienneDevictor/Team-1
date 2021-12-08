@@ -2,14 +2,18 @@
 {% block content %}
 <h1> {{ title }} </h1>
 {% if flashcards %}
-    <div style="width: 50%; height: 325px; margin: auto; border: solid; padding: 25px; display: flex; justify-content: center; align-items: center; background-color: #DDDEB3; border-radius: 5%">
+    <div style="width: 50%; height: 500%px; margin: auto; border: solid; padding: 25px; display: flex; justify-content: center; align-items: center; background-color: #DDDEB3; border-radius: 5%">
         {% if front %}
             <h2> {{ flashcards[card_id].title }} </h2> <br>
         {% else %}
             {% if has_photo %}
-             <img src="{{ url_for('static', filename = 'images/'+photo) }}" alt = 'photo' style ='width:40%;height:50%'>   
-            {% endif %}
-             <p>{{ flashcards[card_id].content }} </p>
+            <figure>
+                 <img src="{{ url_for('static', filename = 'images/'+photo) }}" alt = 'photo' style ='width:40%;height:50%'>  
+                <figcaption> {{ flashcards[card_id].content }} </figcaption>
+             </figure>
+             {% else %}
+                <p>{{ flashcards[card_id].content }} </p>
+             {% endif %}
         {% endif %}
     </div>
     <form action="" method="Post" novalidate >
